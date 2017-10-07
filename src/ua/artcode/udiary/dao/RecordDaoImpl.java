@@ -29,7 +29,7 @@ public class RecordDaoImpl implements RecordDao {
 
     @Override
     public Record findOne(String s) {
-        return null;
+        return appDataContainer.recordMap.get(s);
     }
 
     @Override
