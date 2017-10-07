@@ -39,4 +39,16 @@ public class MainControllerImpl implements MainController {
         // return saved record with id
         return saved;
     }
+
+    @Override
+    public Record getRecordById(String id) throws AppException {
+
+        Record record = recordDao.findOne(id);
+
+        if(record == null){
+            throw  new AppException("Record was not found with id " + id);
+        }
+
+        return record;
+    }
 }

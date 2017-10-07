@@ -10,4 +10,5 @@ public interface MainController {
 
     Record addRecord(Record newRecord) throws AppException;
 
+    Record getRecordById(String id) throws AppException;
 }
