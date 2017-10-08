@@ -23,7 +23,7 @@ public class RegisterHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         User user = JsonUtils.jsonStreamToObj(httpExchange.getRequestBody(), User.class);
         try {
-            User savedUser = mainController.registerUser(user);
+            User savedUser = mainController.addUser(user);
             String savedUserJson = JsonUtils.toJson(savedUser);
             byte[] bytes = savedUserJson.getBytes();
             httpExchange.sendResponseHeaders(200, bytes.length);

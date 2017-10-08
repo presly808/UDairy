@@ -10,7 +10,7 @@ import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.Validator;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 /**
  * Created by serhii on 07.10.17.
