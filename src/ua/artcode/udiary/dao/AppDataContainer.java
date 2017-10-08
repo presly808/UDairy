@@ -1,6 +1,8 @@
 package ua.artcode.udiary.dao;
 
+import ua.artcode.udiary.model.Dairy;
 import ua.artcode.udiary.model.Record;
+import ua.artcode.udiary.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +12,16 @@ import java.util.Map;
  */
 public class AppDataContainer {
 
-
     public Map<String,Record> recordMap;
 
+    private Map<String, Dairy> dairyMap;
+
+    private Map<Long, User> userMap;
+
+    // TODO: fix constructor (in future)
     public AppDataContainer() {
-        this.recordMap = new HashMap<>();
+        this.recordMap = new HashMap<>();   // ?
+        this.dairyMap = new HashMap<>();    // ?
+        this.userMap = new HashMap<>();     // ?
     }
 }
