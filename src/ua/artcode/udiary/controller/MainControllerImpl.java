@@ -1,8 +1,10 @@
 package ua.artcode.udiary.controller;
 
+import ua.artcode.udiary.dao.Dao;
 import ua.artcode.udiary.dao.RecordDao;
 import ua.artcode.udiary.exception.AppException;
 import ua.artcode.udiary.model.Record;
+import ua.artcode.udiary.model.User;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 public class MainControllerImpl implements MainController {
 
     private RecordDao recordDao;
+
 
     public MainControllerImpl(RecordDao recordDao) {
         this.recordDao = recordDao;
@@ -50,5 +53,13 @@ public class MainControllerImpl implements MainController {
         }
 
         return record;
+    }
+
+    @Override
+    public User registerUser(User newUser) throws AppException {
+        if (newUser == null) throw new  AppException("empty user");
+        newUser.setId(1);
+       // User saved = (User)userDao.save(newUser);
+        return newUser;
     }
 }

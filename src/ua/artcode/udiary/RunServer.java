@@ -9,6 +9,7 @@ import ua.artcode.udiary.dao.RecordDaoImpl;
 import ua.artcode.udiary.rest.AddRecordHandler;
 import ua.artcode.udiary.rest.GetRecordHandler;
 import ua.artcode.udiary.rest.HelloHandler;
+import ua.artcode.udiary.rest.RegisterHandler;
 
 import java.net.InetSocketAddress;
 
@@ -33,6 +34,8 @@ public class RunServer {
         server.createContext("/", new HelloHandler());
 
         server.createContext("/get-record", new GetRecordHandler(mainController));
+
+        server.createContext("/register", new RegisterHandler(mainController));
 
 
         server.setExecutor(null);
