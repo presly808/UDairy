@@ -5,13 +5,13 @@ import java.util.List;
 public class Dairy {
 
     // Properties and fields:
-    //  TODO add fields and properties
+    //  TODO add fields and properties (in future)
     private String id;
 
     private List<Record> recordList;
 
     // Constructors:
-    //  TODO add constructors
+    //  TODO add constructors (in future)
     public Dairy(String id) {
         this.id = id;
     }
@@ -22,7 +22,7 @@ public class Dairy {
     }
 
     // Getters and setters:
-    //  TODO add getters and setters
+    //  TODO add getters and setters (in future)
     public String getId() {
         return id;
     }
