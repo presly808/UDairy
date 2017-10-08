@@ -14,6 +14,9 @@ public interface MainController {
 
     User getUserById(long id) throws AppException;
 
+    // Deprecated!!!
+    Record addRecord(Record newRecord) throws AppException;
+
     Record addRecord(long userId, String dairyId, Record newRecord) throws AppException;
 
     Record getRecordById(String id) throws AppException;
