@@ -1,6 +1,7 @@
 package ua.artcode.udiary.controller;
 
 import ua.artcode.udiary.exception.AppException;
+import ua.artcode.udiary.model.Dairy;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
 
@@ -9,9 +10,15 @@ import ua.artcode.udiary.model.User;
  */
 public interface MainController {
 
-    Record addRecord(Record newRecord) throws AppException;
+    User addUser(User newUser) throws AppException;
+
+    User getUserById(long id) throws AppException;
+
+    Record addRecord(long userId, String dairyId, Record newRecord) throws AppException;
 
     Record getRecordById(String id) throws AppException;
 
-    User registerUser(User newUser) throws AppException;
+    Dairy addDairy(long userId, Dairy newDairy) throws AppException;
+
+    Dairy getDairyById(String id) throws AppException;
 }
