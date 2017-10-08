@@ -6,6 +6,7 @@ import ua.artcode.udiary.controller.MainController;
 import ua.artcode.udiary.controller.MainControllerImpl;
 import ua.artcode.udiary.dao.AppDataContainer;
 import ua.artcode.udiary.dao.RecordDaoImpl;
+import ua.artcode.udiary.dao.RecordDaoJsonImpl;
 import ua.artcode.udiary.rest.AddRecordHandler;
 import ua.artcode.udiary.rest.GetRecordHandler;
 import ua.artcode.udiary.rest.HelloHandler;
@@ -19,8 +20,7 @@ public class RunServer {
 
     public static void main(String[] args) throws Exception {
         MainController mainController = new MainControllerImpl(
-                                            new RecordDaoImpl(
-                                                    new AppDataContainer()));
+                                            new RecordDaoJsonImpl());
 
 
         HttpServer server = HttpServer.create();
