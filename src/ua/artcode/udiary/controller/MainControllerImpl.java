@@ -47,6 +47,23 @@ public class MainControllerImpl implements MainController {
     }
 
     @Override
+    public Record addRecord(Record newRecord) throws AppException {
+        //validation
+        Validator.validateRecord(newRecord);    // throws AppException !
+
+        // preprocess
+        newRecord.setCreatedTime(LocalDateTime.now());
+
+        // check unique ???
+
+        // call dao to save or get info
+        Record saved = recordDao.save(newRecord);
+        // return saved record with id
+
+        return saved;
+    }
+
+    @Override
     public Record addRecord(long userId, String dairyId, Record newRecord) throws AppException {
         //validation
         Validator.validateRecord(newRecord);    // throws AppException !
