@@ -9,7 +9,8 @@ import java.util.Locale;
 public class Record {
 
     private String id;
-    private User user;
+
+    private Dairy dairy;
 
     private String title;
     private String body;
@@ -17,6 +18,21 @@ public class Record {
     private LocalDateTime createdTime;
 
     public Record() {
+    }
+
+    public Record(String id, String title, String body, LocalDateTime createdTime) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.createdTime = createdTime;
+    }
+
+    public Record(String id, Dairy dairy, String title, String body, LocalDateTime createdTime) {
+        this.id = id;
+        this.dairy = dairy;
+        this.title = title;
+        this.body = body;
+        this.createdTime = createdTime;
     }
 
     public String getId() {
@@ -27,12 +43,12 @@ public class Record {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Dairy getDairy() {
+        return dairy;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setDairy(Dairy dairy) {
+        this.dairy = dairy;
     }
 
     public String getTitle() {

@@ -33,6 +33,12 @@ public class User {
         this.dairyList = dairyList;
     }
 
+    public User(long id, String email, String pass, List<Dairy> dairyList) {
+        this.id = id;
+        this.email = email;
+        this.pass = pass;
+        this.dairyList = dairyList;
+    }
 
     // Getters and setters:
 
@@ -66,5 +72,21 @@ public class User {
 
     public void setDairyList(List<Dairy> dairyList) {
         this.dairyList = dairyList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        return pass != null ? pass.equals(user.pass) : user.pass == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) id;
     }
 }
