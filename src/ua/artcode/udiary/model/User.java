@@ -1,5 +1,6 @@
 package ua.artcode.udiary.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,13 @@ public class User {
     // Constructors:
 
     public User() {
+        dairyList = new ArrayList<>();
     }
 
     public User(String email, String pass) {
         this.email = email;
         this.pass = pass;
+        dairyList = new ArrayList<>();
     }
 
     public User(String email, String pass, List<Dairy> dairyList) {
@@ -82,7 +85,8 @@ public class User {
         User user = (User) o;
 
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        return pass != null ? pass.equals(user.pass) : user.pass == null;
+        if (pass != null ? !pass.equals(user.pass) : user.pass != null) return false;
+        return dairyList.equals(user.dairyList);
     }
 
     @Override

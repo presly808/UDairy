@@ -20,8 +20,19 @@ public class Record {
     public Record() {
     }
 
-    public Record(String id, String title, String body, LocalDateTime createdTime) {
-        this.id = id;
+    public Record(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
+
+    public Record(String title, String body, LocalDateTime createdTime) {
+        this.title = title;
+        this.body = body;
+        this.createdTime = createdTime;
+    }
+
+    public Record(Dairy dairy, String title, String body, LocalDateTime createdTime) {
+        this.dairy = dairy;
         this.title = title;
         this.body = body;
         this.createdTime = createdTime;

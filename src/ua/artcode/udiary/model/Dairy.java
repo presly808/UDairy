@@ -1,5 +1,6 @@
 package ua.artcode.udiary.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dairy {
@@ -16,18 +17,26 @@ public class Dairy {
 
     // Constructors:
     //  TODO add constructors (in future)
-    public Dairy(String id) {
-        this.id = id;
+
+
+    public Dairy() {
+        recordList = new ArrayList<>();
     }
 
-    public Dairy(String id, List<Record> recordList) {
-        this.id = id;
-        this.recordList = recordList;
+    public Dairy(String title) {
+        this.title = title;
+        recordList = new ArrayList<>();
     }
 
-    public Dairy(String id, User owner, List<Record> recordList) {
-        this.id = id;
+    public Dairy(User owner, String title) {
         this.owner = owner;
+        this.title = title;
+        recordList = new ArrayList<>();
+    }
+
+    public Dairy(User owner, String title, List<Record> recordList) {
+        this.owner = owner;
+        this.title = title;
         this.recordList = recordList;
     }
 

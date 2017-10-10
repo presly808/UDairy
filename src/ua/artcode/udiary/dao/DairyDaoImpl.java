@@ -2,7 +2,7 @@ package ua.artcode.udiary.dao;
 
 import ua.artcode.udiary.model.Dairy;
 
-import java.util.List;
+import java.util.*;
 
 // TODO create implementation !!!
 public class DairyDaoImpl implements DairyDao {
@@ -23,26 +23,36 @@ public class DairyDaoImpl implements DairyDao {
 
     @Override
     public Dairy save(Dairy dairy) {
-        return null;
+
+        String generatedKey = UUID.randomUUID().toString().substring(5);
+
+        dairy.setId(generatedKey);
+        appDataContainer.dairyMap.put(generatedKey, dairy);
+
+        return dairy;
     }
 
     @Override
     public Dairy findOne(String s) {
-        return null;
+        return appDataContainer.dairyMap.get(s);
     }
 
     @Override
     public List<Dairy> findAll() {
-        return null;
+        return new ArrayList<>(appDataContainer.dairyMap.values());
     }
 
     @Override
     public Dairy delete(String s) {
-        return null;
+        return appDataContainer.dairyMap.remove(s);
     }
 
     @Override
     public Dairy update(Dairy dairy) {
-        return null;
+        return appDataContainer.dairyMap.entrySet().stream()
+                .filter(el ->
+                        el.getValue().getId().equals(dairy.getId())
+                )
+                .findFirst().get().setValue(dairy);
     }
 }
