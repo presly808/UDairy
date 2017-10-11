@@ -2,6 +2,7 @@ package ua.artcode.udiary.dao;
 
 import ua.artcode.udiary.model.Record;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,16 +35,20 @@ public class RecordDaoImpl implements RecordDao {
 
     @Override
     public List<Record> findAll() {
-        return null;
+        return new ArrayList<>(appDataContainer.recordMap.values());
     }
 
     @Override
     public Record delete(String s) {
-        return null;
+        return appDataContainer.recordMap.remove(s);
     }
 
     @Override
     public Record update(Record record) {
-        return null;
+        return appDataContainer.recordMap.entrySet().stream()
+                .filter(el ->
+                        el.getValue().getId().equals(record.getId())
+                )
+                .findFirst().get().setValue(record);
     }
 }

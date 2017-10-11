@@ -36,6 +36,10 @@ public class AddRecordHandler implements HttpHandler {
             //send success message
             Record saved = mainController.addRecord(record);
 
+            if (saved != null){
+                System.out.println("Record '" + record.getTitle() + "' has been saved.");
+            }
+
             String savedRecordJson = JsonUtils.toJson(saved);
 
             byte[] bytes = savedRecordJson.getBytes();

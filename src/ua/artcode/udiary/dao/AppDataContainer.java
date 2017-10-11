@@ -14,9 +14,9 @@ public class AppDataContainer {
 
     public Map<String,Record> recordMap;
 
-    private Map<String, Dairy> dairyMap;
+    public Map<String, Dairy> dairyMap;
 
-    private Map<Long, User> userMap;
+    public Map<Long, User> userMap;
 
     // TODO: fix constructor (in future)
     public AppDataContainer() {
