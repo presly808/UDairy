@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class UserDaoJsonImpl implements UserDao{
 
@@ -47,7 +48,13 @@ public class UserDaoJsonImpl implements UserDao{
     @Override
     public User findOne(Long id) {
 
-        return userList.stream().filter(x->x.getId() == id).findFirst().get();
+        List<User> list = userList.stream().filter(x->x.getId() == id).collect(Collectors.toList());
+
+        if(list.size() == 0){
+            return null;
+        }
+
+        return list.stream().findFirst().get();
     }
 
     @Override
@@ -82,7 +89,8 @@ public class UserDaoJsonImpl implements UserDao{
             return null;
         }
 
-        updated = user;
+        int index = userList.indexOf(updated);
+        userList.set(index, user);
 
         String userListJson = gson.toJson(userList, userListType);
 
