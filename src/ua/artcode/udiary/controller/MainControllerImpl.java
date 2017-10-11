@@ -7,6 +7,7 @@ import ua.artcode.udiary.exception.AppException;
 import ua.artcode.udiary.model.Dairy;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
+import ua.artcode.udiary.utils.NotificationUtils;
 import ua.artcode.udiary.utils.Validator;
 
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class MainControllerImpl implements MainController {
     public User addUser(User newUser) throws AppException {
         // validation
         Validator.validateUser(newUser);
-
+        NotificationUtils.sendMail(newUser);
         return userDao.save(newUser);
     }
 
@@ -47,7 +48,20 @@ public class MainControllerImpl implements MainController {
     }
 
     @Override
+    public User logInUser(User requestedUser) throws AppException {
+        // implementation for tests
+        User user = new User();
+        user.setId(1);
+        user.setEmail("Ivanpiontkevich@gmail.com");
+        user.setPass("qwerty1123");
+        return user;
+    }
+
+
+
+    @Override
     public Record addRecord(Record newRecord) throws AppException {
+
         //validation
         Validator.validateRecord(newRecord);    // throws AppException !
 

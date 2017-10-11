@@ -14,6 +14,8 @@ public interface MainController {
 
     User getUserById(long id) throws AppException;
 
+    User logInUser(User requestedUser) throws AppException;
+
     // Deprecated!!!
     Record addRecord(Record newRecord) throws AppException;
 
