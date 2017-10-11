@@ -37,6 +37,10 @@ public class MainControllerImpl implements MainController {
         this.userDao = userDao;
     }
 
+    public MainControllerImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
 
     // Interface methods:
 
