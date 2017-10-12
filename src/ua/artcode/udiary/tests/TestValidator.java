@@ -2,7 +2,7 @@ package ua.artcode.udiary.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ua.artcode.udiary.exception.AppException;
+import ua.artcode.udiary.exception.ValidationException;
 import ua.artcode.udiary.model.Dairy;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
@@ -14,8 +14,17 @@ import java.util.List;
 public class TestValidator {
 
     @Test
-    public void validateRecord() {
-        Record correctRecord = new Record("title", "body");
+    public void validateRecordCorrect() {
+        // must not catch exception
+        try {
+            Validator.validateRecord(new Record("title", "body"));
+        } catch (ValidationException e) {
+            Assert.fail("was caught AppException");
+        }
+    }
+
+    @Test
+    public void validateRecordWrong() {
         Record[] wrongRecords = {
                 null,
                 new Record("title", null),
@@ -26,46 +35,50 @@ public class TestValidator {
                 new Record("", "")
         };
 
-        // must not catch exception
-        try {
-            Validator.validateRecord(correctRecord);
-        } catch (AppException e) {
-            Assert.fail("was caught AppException");
-        }
-
         // must catch exception
         for (Record wrongRecord: wrongRecords) {
             try {
                 Validator.validateRecord(wrongRecord);
                 Assert.fail("wasn't caught AppException");
-            } catch (AppException ignored) {
+            } catch (ValidationException ignored) {
+                ignored.printStackTrace();
             }
         }
     }
 
     @Test
-    public void validateDairy() {
-        Dairy correctDairy = new Dairy();
-        Dairy wrongDairy = null;
-
+    public void validateDairyCorrect() {
         // must not catch exception
         try {
-            Validator.validateDairy(correctDairy);
-        } catch (AppException e) {
+            Validator.validateDairy(new Dairy());
+        } catch (ValidationException e) {
             Assert.fail("was caught AppException");
-        }
-
-        // must catch exception
-        try {
-            Validator.validateDairy(wrongDairy);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
         }
     }
 
     @Test
-    public void validateUser() {
-        User correctUser = new User("email", "pass");
+    public void validateDairyWrong() {
+        // must catch exception
+        try {
+            Validator.validateDairy(null);
+            Assert.fail("wasn't caught AppException");
+        } catch (ValidationException ignored) {
+            ignored.printStackTrace();
+        }
+    }
+
+    @Test
+    public void validateUserCorrect() {
+        // must not catch exception
+        try {
+            Validator.validateUser(new User("email", "pass"));
+        } catch (ValidationException e) {
+            Assert.fail("was caught AppException");
+        }
+    }
+
+    @Test
+    public void validateUserWrong() {
         User[] wrongUsers = {
                 null,
                 new User("email", null),
@@ -76,134 +89,141 @@ public class TestValidator {
                 new User("", "")
         };
 
-        // must not catch exception
-        try {
-            Validator.validateUser(correctUser);
-        } catch (AppException e) {
-            Assert.fail("was caught AppException");
-        }
-
         // must catch exception
         for (User wrongUser: wrongUsers) {
             try {
                 Validator.validateUser(wrongUser);
                 Assert.fail("wasn't caught AppException");
-            } catch (AppException ignored) {
+            } catch (ValidationException ignored) {
+                ignored.printStackTrace();
             }
         }
     }
 
     @Test
-    public void verifyUserSignIn() {
+    public void verifyUserSignInUniqueUser() {
         List<User> allUsers = new ArrayList<>();
         allUsers.add(new User("1", "11"));
 
         // must not catch exception
         try {
             Assert.assertTrue(Validator.verifyUserSignIn(allUsers, new User("2", "22")));
-        } catch (AppException e) {
-            Assert.fail("was caught AppException");
-        }
-
-        // must not catch exception
-        try {
             Assert.assertTrue(Validator.verifyUserSignIn(allUsers, new User("2", "11")));
-        } catch (AppException e) {
+        } catch (ValidationException e) {
             Assert.fail("was caught AppException");
         }
+    }
 
-        // must not catch exception
-        try {
-            Assert.assertFalse(Validator.verifyUserSignIn(allUsers, new User("1", "22")));
-        } catch (AppException e) {
-            Assert.fail("was caught AppException");
-        }
+    public void verifyUserNonUniqueUser() {
+        List<User> allUsers = new ArrayList<>();
+        allUsers.add(new User("1", "11"));
 
         // must not catch exception
         try {
             Assert.assertFalse(Validator.verifyUserSignIn(allUsers, new User("1", "11")));
-        } catch (AppException e) {
+            Assert.assertFalse(Validator.verifyUserSignIn(allUsers, new User("1", "22")));
+        } catch (ValidationException e) {
             Assert.fail("was caught AppException");
         }
+    }
+
+    @Test
+    public void verifyUserSignInNullRequested() {
+        List<User> allUsers = new ArrayList<>();
+        allUsers.add(new User("1", "11"));
 
         // must catch exception
         try {
             Validator.verifyUserSignIn(allUsers, null);
             Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-        }
-
-        // must catch exception
-        try {
-            Validator.verifyUserSignIn(null, new User("2", "22"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-        }
-
-        // must catch exception
-        try {
-            Validator.verifyUserSignIn(null, null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
+        } catch (ValidationException ignored) {
+            ignored.printStackTrace();
         }
     }
 
     @Test
-    public void verifyUserLogIn() {
+    public void verifyUserSignInNullAllUsers() {
+        // must catch exception
+        try {
+            Validator.verifyUserSignIn(null, new User("1", "11"));
+            Assert.fail("wasn't caught AppException");
+        } catch (ValidationException ignored) {
+            ignored.printStackTrace();
+        }
+    }
+
+    @Test
+    public void verifyUserLogInCorrect() {
         List<User> allUsers = new ArrayList<>();
         User testUser = new User("1", "11");
         allUsers.add(testUser);
 
         // must not catch exception
         try {
-            Assert.assertEquals(testUser, Validator.verifyUserLogIn(allUsers, new User("1", "11")));
-        } catch (AppException e) {
+            Assert.assertEquals(testUser,
+                    Validator.verifyUserLogIn(allUsers, new User(testUser.getEmail(), testUser.getPass())));
+        } catch (ValidationException e) {
             Assert.fail("was caught AppException");
         }
+    }
+
+    @Test
+    public void verifyUserLogInWrongEmail() {
+        List<User> allUsers = new ArrayList<>();
+        User testUser = new User("1", "11");
+        allUsers.add(testUser);
 
         // must catch exception
         try {
-            Validator.verifyUserLogIn(allUsers, new User("2", "11"));
+            Validator.verifyUserLogIn(allUsers, new User(testUser.getEmail() + "1", testUser.getPass()));
             Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-
+        } catch (ValidationException ignored) {
+            ignored.printStackTrace();
         }
+    }
+
+    @Test
+    public void verifyUserLogInWrongPass() {
+        List<User> allUsers = new ArrayList<>();
+        User testUser = new User("1", "11");
+        allUsers.add(testUser);
 
         // must catch exception
         try {
-            Validator.verifyUserLogIn(allUsers, new User("1", "22"));
+            Validator.verifyUserLogIn(allUsers, new User(testUser.getEmail(), testUser.getPass() + "1"));
             Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
+        } catch (ValidationException ignored) {
+            ignored.printStackTrace();
         }
+    }
 
-        // must catch exception
-        try {
-            Validator.verifyUserLogIn(allUsers, new User("2", "22"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-
-        }
+    @Test
+    public void verifyUserLogInNullRequested() {
+        List<User> allUsers = new ArrayList<>();
+        User testUser = new User("1", "11");
+        allUsers.add(testUser);
 
         // must catch exception
         try {
             Validator.verifyUserLogIn(allUsers, null);
             Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-        }
-
-        // must catch exception
-        try {
-            Validator.verifyUserLogIn(null, new User("1", "11"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-        }
-
-        // must catch exception
-        try {
-            Validator.verifyUserLogIn(null, null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
+        } catch (ValidationException ignored) {
+            ignored.printStackTrace();
         }
     }
 
+    @Test
+    public void verifyUserLogInNullAllUsers() {
+        List<User> allUsers = new ArrayList<>();
+        User testUser = new User("1", "11");
+        allUsers.add(testUser);
+
+        // must catch exception
+        try {
+            Validator.verifyUserLogIn(null, new User(testUser.getEmail(), testUser.getPass()));
+            Assert.fail("wasn't caught AppException");
+        } catch (ValidationException ignored) {
+            ignored.printStackTrace();
+        }
+    }
 }

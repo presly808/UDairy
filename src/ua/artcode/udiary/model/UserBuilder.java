@@ -1,6 +1,5 @@
 package ua.artcode.udiary.model;
 
-
 import com.sun.istack.internal.NotNull;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
  * Realisation of Builder pattern for User class.
  *
  * @author alex323glo
- * @version 1.0.0
+ * @version 1.0.0   created on 12.10.2017 (16:14)
  *
  * @see User
  */

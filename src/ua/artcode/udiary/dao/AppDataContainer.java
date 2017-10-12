@@ -18,7 +18,6 @@ public class AppDataContainer {
 
     public Map<Long, User> userMap;
 
-    // TODO: fix constructor (in future)
     public AppDataContainer() {
         this.recordMap = new HashMap<>();   // ?
         this.dairyMap = new HashMap<>();    // ?

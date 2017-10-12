@@ -4,7 +4,6 @@ import ua.artcode.udiary.model.Dairy;
 
 import java.util.*;
 
-// TODO create implementation !!!
 public class DairyDaoImpl implements DairyDao {
 
     // Properties and fields:

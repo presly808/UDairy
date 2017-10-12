@@ -11,6 +11,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Unit tests for UserBuilder class logic (TDD).
+ *
+ * @author alex323glo
+ * @version 1.0.0   created on 12.10.2017 (16:59)
+ *
+ * @see UserBuilder
+ */
 public class TestUserBuilder {
 
     private static User testUser;
@@ -92,10 +100,7 @@ public class TestUserBuilder {
                     .dairyList(new LinkedList<>())
                     .getTarget();
 
-            Assert.assertEquals(user.getId(), 1);
-            Assert.assertEquals(user.getEmail(), "email");
-            Assert.assertEquals(user.getPass(), "pass");
-            Assert.assertEquals(user.getDairyList(), new LinkedList<Dairy>());
+            Assert.assertEquals(user, new User(1, "email", "pass", new LinkedList<Dairy>()));
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail("was caught Exception");
@@ -112,10 +117,7 @@ public class TestUserBuilder {
                     .email("e")
                     .getTarget();
 
-            Assert.assertEquals(user.getId(), 3);
-            Assert.assertEquals(user.getEmail(), "e");
-            Assert.assertEquals(user.getPass(), "p");
-            Assert.assertEquals(user.getDairyList(), new ArrayList<Dairy>());
+            Assert.assertEquals(user, new User(3, "e", "p", new ArrayList<Dairy>()));
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail("was caught Exception");

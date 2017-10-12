@@ -1,12 +1,13 @@
 package ua.artcode.udiary.model;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 /**
  * Created by serhii on 07.10.17.
  */
 public class Record {
+
+    // Properties and fields:
 
     private String id;
 
@@ -16,6 +17,9 @@ public class Record {
     private String body;
 
     private LocalDateTime createdTime;
+
+
+    // Constructors:
 
     public Record() {
     }
@@ -45,6 +49,9 @@ public class Record {
         this.body = body;
         this.createdTime = createdTime;
     }
+
+
+    // Getters and setters:
 
     public String getId() {
         return id;
@@ -84,5 +91,27 @@ public class Record {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
+    }
+
+
+    // Object override methods:
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Record record = (Record) o;
+
+        if (dairy != null ? !dairy.equals(record.dairy) : record.dairy != null) return false;
+        if (title != null ? !title.equals(record.title) : record.title != null) return false;
+        if (body != null ? !body.equals(record.body) : record.body != null) return false;
+        return createdTime != null ? createdTime.equals(record.createdTime) : record.createdTime == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
