@@ -1,28 +1,48 @@
+/*
+  checking classes_methods of controller package
+ */
+
 package ua.artcode.udiary.tests;
 
-import org.junit.Before;
+import java.util.logging.Logger;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * checking classes_methods of controller package
- */
+import ua.artcode.udiary.controller.MainControllerImpl;
+import ua.artcode.udiary.dao.RecordDao;
+import ua.artcode.udiary.model.User;
+
 
 public class TestController {
+    private static Logger log = Logger.getLogger("TestUtils");
+
+    private RecordDao recordDao = null;
+    MainControllerImpl controller = new MainControllerImpl(recordDao);
 
     @BeforeClass
     public static void setUp() {
-        System.out.println("Before");
+        log.info("Logger is set.");
     }
 
     @Test
-    public void addRecordCheck() {
-        System.out.println("TestController_addRecord");
+    public void addUser() {
+        User user = new User("mail@mail.com", "pass");
+
+        // ??? AppExtention is Unhandled
+        // controller.addUser(user);
+
+        log.warning("Test is not ready. AppException is Unhandled");
     }
 
-    @Test
-    public void getRecordById() {
-        System.out.println("TestController_getRecordById");
-    }
+/*
+    // To add tests for:
+    public User getUserById(long id) throws AppException {
+    public Record addRecord(Record newRecord) throws AppException {
+    public Record addRecord(long userId, String dairyId, Record newRecord) throws AppException {
+    public Record getRecordById(String id) throws AppException {
+    public Dairy addDairy(long userId, Dairy newDairy) throws AppException {
+    public Dairy getDairyById(String id) throws AppException {
 
+*/
 }
