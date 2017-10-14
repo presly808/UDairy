@@ -4,9 +4,6 @@ import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import ua.artcode.udiary.controller.MainController;
 import ua.artcode.udiary.controller.MainControllerImpl;
-import ua.artcode.udiary.dao.AppDataContainer;
-import ua.artcode.udiary.dao.RecordDaoImpl;
-import ua.artcode.udiary.dao.RecordDaoJsonImpl;
 import ua.artcode.udiary.rest.*;
 import ua.artcode.udiary.dao.UserDaoJsonImpl;
 import ua.artcode.udiary.rest.AddRecordHandler;
@@ -34,12 +31,12 @@ public class RunServer {
         HttpContext context =
                 server.createContext("/add-record", new AddRecordHandler(mainController));
 
-        server.createContext("/", new HelloHandler());
-
+        //server.createContext("/", new HelloHandler());
+        server.createContext("/login", new LoginHandler(mainController));
         server.createContext("/get-record", new GetRecordHandler(mainController));
 
         server.createContext("/register", new RegisterHandler(mainController));
-        server.createContext("/", new LoginHandler(mainController));
+
 
 
         server.setExecutor(null);

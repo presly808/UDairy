@@ -21,17 +21,22 @@ public class RegisterHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        String notification = "Congratulations, your registration has passed successfully";
         User user = JsonUtils.jsonStreamToObj(httpExchange.getRequestBody(), User.class);
         try {
             User savedUser = mainController.addUser(user);
-            String savedUserJson = JsonUtils.toJson(savedUser);
-            byte[] bytes = savedUserJson.getBytes();
-            httpExchange.sendResponseHeaders(200, bytes.length);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(bytes);
-            os.close();
+            //String savedUserJson = JsonUtils.toJson(savedUser);
+            //byte[] bytes = savedUserJson.getBytes();
         } catch (AppException e) {
             e.printStackTrace();
+            notification = "user with such email already exists, or don`t validate email/pass";
         }
+        String responceNotification = JsonUtils.toJson(notification);
+        byte[] bytes = responceNotification.getBytes();
+        httpExchange.sendResponseHeaders(200, bytes.length);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(bytes);
+        os.close();
+        //TODO redirects to the /login page
     }
 }

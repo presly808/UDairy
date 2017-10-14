@@ -1,0 +1,8 @@
+[
+  {
+    "id": -4789651283433964209,
+    "email": "Ivanpiontkevich@gmail.com",
+    "pass": "qwerty1123",
+    "dairyList": []
+  }
+]

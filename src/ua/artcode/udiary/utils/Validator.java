@@ -87,7 +87,7 @@ public class Validator {
      * @see List
      * */
     public static boolean verifyUserSignIn(List<User> allUsers, User requestedUser) throws AppException {
-        if (allUsers == null || requestedUser == null) {
+        if (requestedUser == null) {
             throw new AppException("empty user or list of users");
         }
 
