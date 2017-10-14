@@ -36,6 +36,10 @@ public class GetRecordHandler implements HttpHandler {
             //send success message
             Record loaded = mainController.getRecordById(id);
 
+            if (loaded != null){
+                System.out.println("Record '" + loaded.getTitle() + "' has been fetched.");
+            }
+
             String savedRecordJson = JsonUtils.toJson(loaded);
 
             byte[] bytes = savedRecordJson.getBytes();
