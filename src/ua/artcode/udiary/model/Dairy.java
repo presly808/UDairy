@@ -6,7 +6,7 @@ import java.util.List;
 public class Dairy {
 
     // Properties and fields:
-    //  TODO add fields and properties (in future)
+
     private String id;
 
     private User owner;
@@ -15,9 +15,8 @@ public class Dairy {
 
     private List<Record> recordList;
 
-    // Constructors:
-    //  TODO add constructors (in future)
 
+    // Constructors:
 
     public Dairy() {
         recordList = new ArrayList<>();
@@ -47,8 +46,9 @@ public class Dairy {
         this.recordList = recordList;
     }
 
+
     // Getters and setters:
-    //  TODO add getters and setters (in future)
+
     public String getId() {
         return id;
     }
@@ -79,5 +79,26 @@ public class Dairy {
 
     public void setRecordList(List<Record> recordList) {
         this.recordList = recordList;
+    }
+
+
+    // Object override methods:
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dairy dairy = (Dairy) o;
+
+        if (owner != null ? !owner.equals(dairy.owner) : dairy.owner != null) return false;
+        if (title != null ? !title.equals(dairy.title) : dairy.title != null) return false;
+        return recordList != null ? recordList.equals(dairy.recordList) : dairy.recordList == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

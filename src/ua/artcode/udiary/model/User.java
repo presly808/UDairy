@@ -43,6 +43,7 @@ public class User {
         this.dairyList = dairyList;
     }
 
+
     // Getters and setters:
 
     public long getId() {
@@ -77,6 +78,11 @@ public class User {
         this.dairyList = dairyList;
     }
 
+
+    // Object override methods:
+    // TODO fix
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,11 +92,11 @@ public class User {
 
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (pass != null ? !pass.equals(user.pass) : user.pass != null) return false;
-        return dairyList.equals(user.dairyList);
+        return dairyList != null ? dairyList.equals(user.dairyList) : user.dairyList == null;
     }
 
     @Override
     public int hashCode() {
-        return (int) id;
+        return (int) (id);
     }
 }

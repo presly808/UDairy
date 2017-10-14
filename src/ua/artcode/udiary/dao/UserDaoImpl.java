@@ -2,11 +2,8 @@ package ua.artcode.udiary.dao;
 
 import ua.artcode.udiary.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-// TODO create implementation !!!
 public class UserDaoImpl implements UserDao {
 
     // Properties and fields:
@@ -51,10 +48,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        return appDataContainer.userMap.entrySet().stream()
-                .filter(el ->
-                        el.getValue().getId() == user.getId()
-                )
-                .findFirst().get().setValue(user);
+
+        Collection<User> userMapValues = appDataContainer.userMap.values();
+
+        for (User tempUser: userMapValues) {
+            if (tempUser.equals(user)) {
+                appDataContainer.userMap.put(tempUser.getId(), user);
+                return tempUser;
+            }
+        }
+
+        return null;
     }
 }
