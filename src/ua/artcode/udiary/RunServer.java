@@ -7,6 +7,7 @@ import ua.artcode.udiary.controller.MainControllerImpl;
 import ua.artcode.udiary.dao.AppDataContainer;
 import ua.artcode.udiary.dao.RecordDaoImpl;
 import ua.artcode.udiary.dao.RecordDaoJsonImpl;
+import ua.artcode.udiary.dao.UserDaoJsonImpl;
 import ua.artcode.udiary.rest.AddRecordHandler;
 import ua.artcode.udiary.rest.GetRecordHandler;
 import ua.artcode.udiary.rest.HelloHandler;
@@ -18,9 +19,11 @@ import java.net.InetSocketAddress;
  */
 public class RunServer {
 
+    private static final String DATA_PATH = "./src/ua/artcode/udiary/resources/data.txt";
+
     public static void main(String[] args) throws Exception {
         MainController mainController = new MainControllerImpl(
-                                            new RecordDaoJsonImpl());
+                                            new UserDaoJsonImpl(DATA_PATH));
 
 
         HttpServer server = HttpServer.create();

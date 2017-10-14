@@ -1,5 +1,6 @@
 package ua.artcode.udiary.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,13 @@ public class User {
     // Constructors:
 
     public User() {
+        dairyList = new ArrayList<>();
     }
 
     public User(String email, String pass) {
         this.email = email;
         this.pass = pass;
+        dairyList = new ArrayList<>();
     }
 
     public User(String email, String pass, List<Dairy> dairyList) {
@@ -33,6 +36,12 @@ public class User {
         this.dairyList = dairyList;
     }
 
+    public User(long id, String email, String pass, List<Dairy> dairyList) {
+        this.id = id;
+        this.email = email;
+        this.pass = pass;
+        this.dairyList = dairyList;
+    }
 
     // Getters and setters:
 
@@ -66,5 +75,22 @@ public class User {
 
     public void setDairyList(List<Dairy> dairyList) {
         this.dairyList = dairyList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (pass != null ? !pass.equals(user.pass) : user.pass != null) return false;
+        return dairyList.equals(user.dairyList);
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) id;
     }
 }
