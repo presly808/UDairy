@@ -36,7 +36,7 @@ public class TestValidator {
         };
 
         // must catch exception
-        for (Record wrongRecord: wrongRecords) {
+        for (Record wrongRecord : wrongRecords) {
             try {
                 Validator.validateRecord(wrongRecord);
                 Assert.fail("wasn't caught AppException");
@@ -56,15 +56,12 @@ public class TestValidator {
         }
     }
 
-    @Test
-    public void validateDairyWrong() {
+    @Test(expected = ValidationException.class)
+    public void validateDairyWrong() throws ValidationException {
         // must catch exception
-        try {
-            Validator.validateDairy(null);
-            Assert.fail("wasn't caught AppException");
-        } catch (ValidationException ignored) {
-            ignored.printStackTrace();
-        }
+
+        Validator.validateDairy(null);
+
     }
 
     @Test
@@ -90,7 +87,7 @@ public class TestValidator {
         };
 
         // must catch exception
-        for (User wrongUser: wrongUsers) {
+        for (User wrongUser : wrongUsers) {
             try {
                 Validator.validateUser(wrongUser);
                 Assert.fail("wasn't caught AppException");

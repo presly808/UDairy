@@ -6,9 +6,9 @@ import java.util.List;
 public class Dairy {
 
     // Properties and fields:
-
     private String id;
 
+    // todo remove user for avoiding complex logic during a saving
     private User owner;
 
     private String title;

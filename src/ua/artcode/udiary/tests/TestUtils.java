@@ -82,7 +82,6 @@ public class TestUtils {
         Record record = JsonUtils.jsonStreamToObj(requestBody, Record.class);
 
         assertNull(record.getId());
-        assertNull(record.getUser());
         assertEquals(record.getTitle(), "newRecord");
         assertEquals(record.getBody(), "New body");
         assertNull(record.getCreatedTime());
@@ -100,7 +99,6 @@ public class TestUtils {
         Record record = JsonUtils.toObject(jsonString, Record.class);
 
         assertTrue(record.getId().equals("1"));
-        assertTrue(record.getUser().getEmail().equals("mail1@mail.com"));
         assertEquals(record.getTitle(), "Title1");
         assertEquals(record.getBody(), "Body1");
         assertNull(record.getCreatedTime());
@@ -116,7 +114,6 @@ public class TestUtils {
         record.setId("1");
         record.setTitle("Title1");
         record.setBody("Body1");
-        record.setUser(user);
 
         String expectedJson = "{\"id\":\"1\"," +
                 "\"user\":{\"id\":0,\"email\":\"mail1@mail.com\",\"pass\":\"pass1\"}," +

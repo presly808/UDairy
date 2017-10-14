@@ -9,13 +9,19 @@ import ua.artcode.udiary.utils.JsonUtils;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class UserDaoJsonImpl implements UserDao{
 
+    // todo get path from config
     private final String DATA_PATH;
+
+    // todo GSON must be a singleton
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    // todo init in constructor
     private Type userListType = new TypeToken<List<User>>(){}.getType();
     private List<User> userList;
 
@@ -38,6 +44,7 @@ public class UserDaoJsonImpl implements UserDao{
         userList.add(user);
         String userListJson = gson.toJson(userList, userListType);
 
+        // todo throw exception, not null
         if (!JsonUtils.writeJsonToFile(DATA_PATH, userListJson)) {
             return null;
         }
@@ -48,13 +55,16 @@ public class UserDaoJsonImpl implements UserDao{
     @Override
     public User findOne(Long id) {
 
-        List<User> list = userList.stream().filter(x->x.getId() == id).collect(Collectors.toList());
+        List<User> list = userList.stream().filter(x -> x.getId() == id).collect(Collectors.toList());
 
+        //
         if(list.size() == 0){
             return null;
         }
 
-        return list.stream().findFirst().get();
+        // todo get may be null
+        Optional<User> first = list.stream().findFirst();
+        return first.orElse(null);
     }
 
     @Override
@@ -71,6 +81,7 @@ public class UserDaoJsonImpl implements UserDao{
         }
 
         userList.remove(deleted);
+
 
         String userListJson = gson.toJson(userList, userListType);
 
@@ -89,8 +100,8 @@ public class UserDaoJsonImpl implements UserDao{
             return null;
         }
 
-        int index = userList.indexOf(updated);
-        userList.set(index, user);
+
+        userList.set(userList.indexOf(updated), user);
 
         String userListJson = gson.toJson(userList, userListType);
 

@@ -19,7 +19,8 @@ import java.net.InetSocketAddress;
  */
 public class RunServer {
 
-    private static final String DATA_PATH = "./src/ua/artcode/udiary/resources/data.txt";
+    // todo use yaml config file
+    private static final String DATA_PATH = "./resources/data.txt";
 
     public static void main(String[] args) throws Exception {
         MainController mainController = new MainControllerImpl(
@@ -28,6 +29,7 @@ public class RunServer {
 
         HttpServer server = HttpServer.create();
 
+        // todo take port from config also
         server.bind(new InetSocketAddress(8000), 0);
 
         HttpContext context =

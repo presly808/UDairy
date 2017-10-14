@@ -20,8 +20,11 @@ import java.util.List;
 
 public class TestUserDaoJsonImpl {
 
+    // todo
     private static final String PATH = "./src/ua/artcode/udiary/resources/testdata.txt";
     private UserDao userDaoJsonImpl;
+
+    // todo singleton, Gson gson = ObjectHolder.get("gson")
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private Type userType = new TypeToken<List<User>>(){}.getType();
 
@@ -95,12 +98,12 @@ public class TestUserDaoJsonImpl {
 
         Long id = found.stream().map(User::getId).findFirst().get();
 
-        Assert.assertTrue(1==id);
+        Assert.assertEquals(1, id.longValue());
     }
 
     @Test
     public void delete() {
-        User deleted = userDaoJsonImpl.delete((long)0);
+        User deleted = userDaoJsonImpl.delete(0L);
         Assert.assertNull(deleted);
 
         deleted = userDaoJsonImpl.delete((long)1);
