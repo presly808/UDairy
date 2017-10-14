@@ -19,11 +19,14 @@ public class RegisterHandler implements HttpHandler {
     }
 
 
+    // TODO send message {"messageType":"success", "message" : "text"}
+    // or {"messageType" : "error", "message" : "error"}
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String notification = "Congratulations, your registration has passed successfully";
         User user = JsonUtils.jsonStreamToObj(httpExchange.getRequestBody(), User.class);
         try {
+            // todo add register method to MainController
             User savedUser = mainController.addUser(user);
             //String savedUserJson = JsonUtils.toJson(savedUser);
             //byte[] bytes = savedUserJson.getBytes();

@@ -8,6 +8,9 @@ import java.util.Properties;
 
 public class NotificationUtils {
 
+    // todo use configuration. ConfigHolder ch = ObjectHolder.get("ConfigHolder");
+    // ch.get("smtp.email")
+    // ch.get("smtp.pass")
    private final static String USER_EMAIL = "UDairy.app@gmail.com";
    private final static String USER_PASS = "udairyaco21";
    private static String emailSubject = "Welcome to UDairy!";
@@ -15,6 +18,7 @@ public class NotificationUtils {
     /*write validate letter maybe in future import mail from txt file*/
 
     public static void sendMail(User user){
+        // todo init session , only one time, prepare message
         String to = user.getEmail();
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -29,8 +33,9 @@ public class NotificationUtils {
                         return new PasswordAuthentication(USER_EMAIL, USER_PASS);
                     }
                 });
+        MimeMessage message = new MimeMessage(session);
+
         try {
-            MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(USER_EMAIL));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject(emailSubject);
@@ -39,6 +44,7 @@ public class NotificationUtils {
                             " Your login: %s \n" +
                             " Your password: %s \n", user.getEmail(), user.getPass());
             message.setText(text);
+
             Transport.send(message);
             System.out.println("Send message successfully....");
         } catch (MessagingException e) {
