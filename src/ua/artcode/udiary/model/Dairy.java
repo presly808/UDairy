@@ -8,9 +8,6 @@ public class Dairy {
     // Properties and fields:
     private String id;
 
-    // todo remove user for avoiding complex logic during a saving
-    private User owner;
-
     private String title;
 
     private List<Record> recordList;
@@ -27,21 +24,13 @@ public class Dairy {
         recordList = new ArrayList<>();
     }
 
-    public Dairy(User owner, String title) {
-        this.owner = owner;
-        this.title = title;
-        recordList = new ArrayList<>();
-    }
-
-    public Dairy(User owner, String title, List<Record> recordList) {
-        this.owner = owner;
+    public Dairy(String title, List<Record> recordList) {
         this.title = title;
         this.recordList = recordList;
     }
 
-    public Dairy(String id, User owner, String title, List<Record> recordList) {
+    public Dairy(String id, String title, List<Record> recordList) {
         this.id = id;
-        this.owner = owner;
         this.title = title;
         this.recordList = recordList;
     }
@@ -55,14 +44,6 @@ public class Dairy {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public String getTitle() {
@@ -92,7 +73,6 @@ public class Dairy {
 
         Dairy dairy = (Dairy) o;
 
-        if (owner != null ? !owner.equals(dairy.owner) : dairy.owner != null) return false;
         if (title != null ? !title.equals(dairy.title) : dairy.title != null) return false;
         return recordList != null ? recordList.equals(dairy.recordList) : dairy.recordList == null;
     }

@@ -11,8 +11,6 @@ public class Record {
 
     private String id;
 
-    private Dairy dairy;
-
     private String title;
     private String body;
 
@@ -35,16 +33,8 @@ public class Record {
         this.createdTime = createdTime;
     }
 
-    public Record(Dairy dairy, String title, String body, LocalDateTime createdTime) {
-        this.dairy = dairy;
-        this.title = title;
-        this.body = body;
-        this.createdTime = createdTime;
-    }
-
-    public Record(String id, Dairy dairy, String title, String body, LocalDateTime createdTime) {
+    public Record(String id, String title, String body, LocalDateTime createdTime) {
         this.id = id;
-        this.dairy = dairy;
         this.title = title;
         this.body = body;
         this.createdTime = createdTime;
@@ -59,14 +49,6 @@ public class Record {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Dairy getDairy() {
-        return dairy;
-    }
-
-    public void setDairy(Dairy dairy) {
-        this.dairy = dairy;
     }
 
     public String getTitle() {
@@ -104,7 +86,6 @@ public class Record {
 
         Record record = (Record) o;
 
-        if (dairy != null ? !dairy.equals(record.dairy) : record.dairy != null) return false;
         if (title != null ? !title.equals(record.title) : record.title != null) return false;
         if (body != null ? !body.equals(record.body) : record.body != null) return false;
         return createdTime != null ? createdTime.equals(record.createdTime) : record.createdTime == null;
