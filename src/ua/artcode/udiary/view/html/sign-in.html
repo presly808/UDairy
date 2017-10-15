@@ -29,13 +29,13 @@
 
                 <form action="/login" method="post">
                     <dl>
-                        <dt>Username:</dt>
-                        <dd><input type="text" name="username" size="30" value=""></dd>
+                        <dt>Email:</dt>
+                        <dd><input id="email" type="text" name="username" size="30" value=""></dd>
                         <dt>Password:</dt>
-                        <dd><input type="password" name="password" size="30"></dd>
+                        <dd><input id="pass" type="password" name="password" size="30"></dd>
                     </dl>
-                    <div class="actions"><input type="submit" value="Sign In"></div>
                 </form>
+                <div class="actions"><input id="submitButton" type="submit" value="Sign In"></div>
 
             </div>
             <div class="footer">
@@ -44,5 +44,40 @@
         </div>
     </div>
 </div>
+<script>
+
+  function sendLoginForm(){
+    var email = document.getElementById("email").value;
+    var pass = document.getElementById("pass").value;
+
+    var obj = { email : email, pass: pass};
+
+    // construct an HTTP request
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/login", true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+    // send the collected data as JSON
+    xhr.send(JSON.stringify(obj));
+
+    xhr.onloadend = function (resp) {
+      // get access token and put in cookies
+      console.log("req has been sucessful\n" + resp);
+      window.location.replace("/view/html/user-page.html");
+    };
+
+  }
+
+  function init() {
+    document.getElementById("submitButton")
+      .addEventListener("click", sendLoginForm);
+  }
+  // add listener to button
+  // get form
+  // toJson
+  // sendToServer
+
+  document.addEventListener("DOMContentLoaded", init);
+</script>
 </body>
 </html>

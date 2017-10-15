@@ -4,12 +4,12 @@ import ua.artcode.udiary.dao.DairyDao;
 import ua.artcode.udiary.dao.RecordDao;
 import ua.artcode.udiary.dao.UserDao;
 import ua.artcode.udiary.exception.AppException;
-import ua.artcode.udiary.model.User;
-import ua.artcode.udiary.model.Dairy;
-import ua.artcode.udiary.model.Record;
+import ua.artcode.udiary.model.*;
+import ua.artcode.udiary.utils.NotificationUtils;
 import ua.artcode.udiary.utils.Validator;
 
 import java.time.LocalDateTime;
+
 
 /**
  * Created by serhii on 07.10.17.
@@ -47,12 +47,13 @@ public class MainControllerImpl implements MainController {
     @Override
     public User addUser(User newUser) throws AppException {
         // validation
-        Validator.validateUser(newUser);    // throws ValidationException
+        Validator.validateUser(newUser);
 
         // verify by email not to save to DB new user with existing email.
         if(!Validator.verifyUserSignIn(userDao.findAll(), newUser)) {
             throw new AppException("user with such email already exists");
         }
+        NotificationUtils.sendMail(newUser);
 
         return userDao.save(newUser);
     }
@@ -71,7 +72,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public User logInUser(User requestedUser) throws AppException {
         // validation
-        Validator.validateUser(requestedUser);  // throws ValidationException
+        Validator.validateUser(requestedUser);
 
         // verifies by email and pass and (if correct) returns User from DB
         // with email and pass equal to requestedUser's:
@@ -80,8 +81,9 @@ public class MainControllerImpl implements MainController {
 
     @Override
     public Record addRecord(Record newRecord) throws AppException {
+
         //validation
-        Validator.validateRecord(newRecord);    // throws ValidationException
+        Validator.validateRecord(newRecord);    // throws AppException !
 
         // preprocess
         newRecord.setCreatedTime(LocalDateTime.now());
@@ -100,7 +102,7 @@ public class MainControllerImpl implements MainController {
         }
 
         //validation
-        Validator.validateRecord(newRecord);    // ValidationException
+        Validator.validateRecord(newRecord);    // throws AppException !
 
         if (userDao.findOne(userId) == null) {
             throw new AppException("no user with such id");
@@ -142,7 +144,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public Dairy addDairy(long userId, Dairy newDairy) throws AppException {
         //validation
-        Validator.validateDairy(newDairy);    // ValidationException
+        Validator.validateDairy(newDairy);    // throws AppException !
 
         User destinationUser = userDao.findOne(userId);
         if (destinationUser == null) {

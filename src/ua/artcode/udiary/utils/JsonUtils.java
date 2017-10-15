@@ -14,7 +14,21 @@ public class JsonUtils {
     private static final Gson GSON = new Gson();
 
     public static String jsonToString(InputStream requestBody) {
-        throw new NotImplementedException();
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(requestBody))) {
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static <T> T jsonStreamToObj(InputStream requestBody, Class<T> cl) {
@@ -38,7 +52,7 @@ public class JsonUtils {
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                sb.append(line);
+                sb.append(line).append("\n");
             }
 
             return sb.toString();

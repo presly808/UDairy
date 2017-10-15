@@ -2,6 +2,7 @@ package ua.artcode.udiary.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ua.artcode.udiary.exception.AppException;
 import ua.artcode.udiary.exception.ValidationException;
 import ua.artcode.udiary.model.Dairy;
 import ua.artcode.udiary.model.Record;
@@ -18,7 +19,7 @@ public class TestValidator {
         // must not catch exception
         try {
             Validator.validateRecord(new Record("title", "body"));
-        } catch (ValidationException e) {
+        } catch (AppException e) {
             Assert.fail("was caught AppException");
         }
     }
@@ -40,7 +41,7 @@ public class TestValidator {
             try {
                 Validator.validateRecord(wrongRecord);
                 Assert.fail("wasn't caught AppException");
-            } catch (ValidationException ignored) {
+            } catch (AppException ignored) {
                 ignored.printStackTrace();
             }
         }
@@ -51,13 +52,13 @@ public class TestValidator {
         // must not catch exception
         try {
             Validator.validateDairy(new Dairy());
-        } catch (ValidationException e) {
+        } catch (AppException e) {
             Assert.fail("was caught AppException");
         }
     }
 
     @Test(expected = ValidationException.class)
-    public void validateDairyWrong() throws ValidationException {
+    public void validateDairyWrong() throws AppException {
         // must catch exception
 
         Validator.validateDairy(null);
@@ -69,7 +70,7 @@ public class TestValidator {
         // must not catch exception
         try {
             Validator.validateUser(new User("email", "pass"));
-        } catch (ValidationException e) {
+        } catch (AppException e) {
             Assert.fail("was caught AppException");
         }
     }
@@ -91,7 +92,7 @@ public class TestValidator {
             try {
                 Validator.validateUser(wrongUser);
                 Assert.fail("wasn't caught AppException");
-            } catch (ValidationException ignored) {
+            } catch (AppException ignored) {
                 ignored.printStackTrace();
             }
         }
@@ -106,7 +107,7 @@ public class TestValidator {
         try {
             Assert.assertTrue(Validator.verifyUserSignIn(allUsers, new User("2", "22")));
             Assert.assertTrue(Validator.verifyUserSignIn(allUsers, new User("2", "11")));
-        } catch (ValidationException e) {
+        } catch (AppException e) {
             Assert.fail("was caught AppException");
         }
     }
@@ -119,7 +120,7 @@ public class TestValidator {
         try {
             Assert.assertFalse(Validator.verifyUserSignIn(allUsers, new User("1", "11")));
             Assert.assertFalse(Validator.verifyUserSignIn(allUsers, new User("1", "22")));
-        } catch (ValidationException e) {
+        } catch (AppException e) {
             Assert.fail("was caught AppException");
         }
     }
@@ -133,7 +134,7 @@ public class TestValidator {
         try {
             Validator.verifyUserSignIn(allUsers, null);
             Assert.fail("wasn't caught AppException");
-        } catch (ValidationException ignored) {
+        } catch (AppException ignored) {
             ignored.printStackTrace();
         }
     }
@@ -144,7 +145,7 @@ public class TestValidator {
         try {
             Validator.verifyUserSignIn(null, new User("1", "11"));
             Assert.fail("wasn't caught AppException");
-        } catch (ValidationException ignored) {
+        } catch (AppException ignored) {
             ignored.printStackTrace();
         }
     }
@@ -159,7 +160,7 @@ public class TestValidator {
         try {
             Assert.assertEquals(testUser,
                     Validator.verifyUserLogIn(allUsers, new User(testUser.getEmail(), testUser.getPass())));
-        } catch (ValidationException e) {
+        } catch (AppException e) {
             Assert.fail("was caught AppException");
         }
     }
@@ -174,7 +175,7 @@ public class TestValidator {
         try {
             Validator.verifyUserLogIn(allUsers, new User(testUser.getEmail() + "1", testUser.getPass()));
             Assert.fail("wasn't caught AppException");
-        } catch (ValidationException ignored) {
+        } catch (AppException ignored) {
             ignored.printStackTrace();
         }
     }
@@ -189,7 +190,7 @@ public class TestValidator {
         try {
             Validator.verifyUserLogIn(allUsers, new User(testUser.getEmail(), testUser.getPass() + "1"));
             Assert.fail("wasn't caught AppException");
-        } catch (ValidationException ignored) {
+        } catch (AppException ignored) {
             ignored.printStackTrace();
         }
     }
@@ -204,7 +205,7 @@ public class TestValidator {
         try {
             Validator.verifyUserLogIn(allUsers, null);
             Assert.fail("wasn't caught AppException");
-        } catch (ValidationException ignored) {
+        } catch (AppException ignored) {
             ignored.printStackTrace();
         }
     }
@@ -219,7 +220,7 @@ public class TestValidator {
         try {
             Validator.verifyUserLogIn(null, new User(testUser.getEmail(), testUser.getPass()));
             Assert.fail("wasn't caught AppException");
-        } catch (ValidationException ignored) {
+        } catch (AppException ignored) {
             ignored.printStackTrace();
         }
     }

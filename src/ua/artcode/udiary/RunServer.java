@@ -6,13 +6,11 @@ import ua.artcode.udiary.config.ConfigHolder;
 import ua.artcode.udiary.controller.MainController;
 import ua.artcode.udiary.controller.MainControllerImpl;
 import ua.artcode.udiary.dao.UserDaoJsonImpl;
-import ua.artcode.udiary.rest.AddRecordHandler;
-import ua.artcode.udiary.rest.GetRecordHandler;
-import ua.artcode.udiary.rest.HelloHandler;
-import ua.artcode.udiary.rest.StaticFilesHandler;
+import ua.artcode.udiary.rest.*;
 
 import java.io.File;
 import java.net.InetSocketAddress;
+import java.util.concurrent.Executor;
 
 /**
  * Created by serhii on 07.10.17.
@@ -30,19 +28,19 @@ public class RunServer {
         File file = new File(RunServer.class.getResource(ch.getProperty("app.db.path")).getFile());
 
         MainController mainController = new MainControllerImpl(
-                                            new UserDaoJsonImpl(file.getAbsolutePath()));
+                new UserDaoJsonImpl(file.getAbsolutePath()));
 
 
         HttpServer server = HttpServer.create();
-
-        // todo take port from config also
         server.bind(new InetSocketAddress(Integer.parseInt(ch.getProperty("app.port"))), 0);
 
-        HttpContext context =
-                server.createContext("/add-record", new AddRecordHandler(mainController));
 
         server.createContext("/", new HelloHandler());
 
+        server.createContext("/login", new LoginHandler(mainController));
+        server.createContext("/register", new RegisterHandler(mainController));
+
+        server.createContext("/add-record", new AddRecordHandler(mainController));
         server.createContext("/get-record", new GetRecordHandler(mainController));
 
         File staticFolder =
@@ -50,7 +48,13 @@ public class RunServer {
         server.createContext("/view", new StaticFilesHandler(staticFolder.getAbsolutePath()));
 
 
-        server.setExecutor(null);
+        server.setExecutor(command -> {
+            try{
+                command.run();
+            }catch (Throwable ex){
+                ex.printStackTrace();
+            }
+        });
         server.start();
 
         System.out.println("Server has been started");
