@@ -14,6 +14,8 @@ import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.JsonUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
 public class TestUserDaoJsonImpl {
 
     // todo
-    private static final String PATH = "./src/ua/artcode/udiary/resources/testdata.txt";
+    private static final String PATH = "testdata.txt";
     private UserDao userDaoJsonImpl;
 
     // todo singleton, Gson gson = ObjectHolder.get("gson")
@@ -30,6 +32,12 @@ public class TestUserDaoJsonImpl {
 
     @Before
     public void setUp() {
+
+        try {
+            new File(PATH).createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Record testRecord1 = new Record("Key1", null,"TestTitle1", "TestBody1", null);
         Record testRecord2 = new Record("Key2", null,"TestTitle2", "TestBody2", null);
@@ -68,7 +76,11 @@ public class TestUserDaoJsonImpl {
     @After
     public void tearDown() {
         String usersJson = gson.toJson(null, userType);
+
         JsonUtils.writeJsonToFile(PATH, usersJson);
+
+        //todo test this place
+        new File(PATH).delete();
     }
 
     @Test
