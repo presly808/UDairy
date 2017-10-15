@@ -1,6 +1,5 @@
 package ua.artcode.udiary.model;
 
-import com.sun.istack.internal.NotNull;
 
 import java.util.List;
 
@@ -94,7 +93,7 @@ public class UserBuilder {
      * @see User
      * @see NullPointerException
      * */
-    public UserBuilder dairyList(@NotNull List<Dairy> newDairyList) throws NullPointerException {
+    public UserBuilder dairyList(List<Dairy> newDairyList) throws NullPointerException {
         if (newDairyList == null) {
             throw new NullPointerException("newDairyList is null");
         }

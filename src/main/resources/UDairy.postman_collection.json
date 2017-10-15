@@ -1,0 +1,79 @@
+{
+	"owner": "1114606",
+	"lastUpdatedBy": "1114606",
+	"lastRevision": 2341797318,
+	"team": null,
+	"id": "5dfbd9d7-c687-661e-407a-2d2401b6763d",
+	"name": "UDairy",
+	"description": null,
+	"folders_order": [],
+	"order": [
+		"7c57ee7d-3352-304c-0325-5ad5e9fc6d82",
+		"d24e3f0a-b88f-54c4-8d27-f3b2210e1a46"
+	],
+	"folders": [],
+	"hasRequests": true,
+	"requests": [
+		{
+			"folder": null,
+			"id": "7c57ee7d-3352-304c-0325-5ad5e9fc6d82",
+			"name": "http://localhost:8000/add-record",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\n  \"title\":\"newRecord\",\n  \"body\":\"New body\"\n\n}",
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8000/add-record",
+			"preRequestScript": null,
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\nvar id = jsonData.id;\npostman.setGlobalVariable(\"product_id\", id);",
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "5dfbd9d7-c687-661e-407a-2d2401b6763d"
+		},
+		{
+			"folder": null,
+			"id": "d24e3f0a-b88f-54c4-8d27-f3b2210e1a46",
+			"name": "http://localhost:8000/get-record",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "http://localhost:8000/get-record?id={{product_id}}",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": "{}",
+			"queryParams": [
+				{
+					"key": "id",
+					"value": "{{product_id}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [],
+			"pathVariableData": [],
+			"responses": [],
+			"collectionId": "5dfbd9d7-c687-661e-407a-2d2401b6763d"
+		}
+	]
+}

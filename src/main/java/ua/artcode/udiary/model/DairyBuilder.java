@@ -1,7 +1,6 @@
 package ua.artcode.udiary.model;
 
 
-import com.sun.istack.internal.NotNull;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class DairyBuilder {
     /**
      * @throws NullPointerException when argument is null.
      * */
-    public DairyBuilder recordList(@NotNull List<Record> newRecordList) {
+    public DairyBuilder recordList(List<Record> newRecordList) {
         if (newRecordList == null) {
             throw new NullPointerException("newRecordList is null");
         }

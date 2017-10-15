@@ -39,23 +39,23 @@ public class TestUserDaoJsonImpl {
             e.printStackTrace();
         }
 
-        Record testRecord1 = new Record("Key1", null,"TestTitle1", "TestBody1", null);
-        Record testRecord2 = new Record("Key2", null,"TestTitle2", "TestBody2", null);
+        Record testRecord1 = new Record("Key1", "TestTitle1", "TestBody1", null);
+        Record testRecord2 = new Record("Key2", "TestTitle2", "TestBody2", null);
 
         List<Record> testRecords1 = new ArrayList<>();
         testRecords1.add(testRecord1);
         testRecords1.add(testRecord2);
 
-        Dairy dairy1 = new Dairy("Dkey1", null, "DairyTitle1", testRecords1);
+        Dairy dairy1 = new Dairy("Dkey1",  "DairyTitle1", testRecords1);
 
-        Record testRecord3 = new Record("Key3", null,"TestTitle3", "TestBody3", null);
-        Record testRecord4 = new Record("Key4", null,"TestTitle4", "TestBody4", null);
+        Record testRecord3 = new Record("Key3", "TestTitle3", "TestBody3", null);
+        Record testRecord4 = new Record("Key4", "TestTitle4", "TestBody4", null);
 
         List<Record> testRecords2 = new ArrayList<>();
         testRecords2.add(testRecord3);
         testRecords2.add(testRecord4);
 
-        Dairy dairy2 = new Dairy("Dkey2", null, "DairyTitle2", testRecords2);
+        Dairy dairy2 = new Dairy("Dkey2",  "DairyTitle2", testRecords2);
 
         List<Dairy> testDairies = new ArrayList<>();
         testDairies.add(dairy1);
