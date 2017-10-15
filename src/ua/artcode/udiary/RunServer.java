@@ -2,16 +2,16 @@ package ua.artcode.udiary;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
+import ua.artcode.udiary.config.ConfigHolder;
 import ua.artcode.udiary.controller.MainController;
 import ua.artcode.udiary.controller.MainControllerImpl;
-import ua.artcode.udiary.dao.AppDataContainer;
-import ua.artcode.udiary.dao.RecordDaoImpl;
-import ua.artcode.udiary.dao.RecordDaoJsonImpl;
 import ua.artcode.udiary.dao.UserDaoJsonImpl;
 import ua.artcode.udiary.rest.AddRecordHandler;
 import ua.artcode.udiary.rest.GetRecordHandler;
 import ua.artcode.udiary.rest.HelloHandler;
+import ua.artcode.udiary.rest.StaticFilesHandler;
 
+import java.io.File;
 import java.net.InetSocketAddress;
 
 /**
@@ -20,17 +20,23 @@ import java.net.InetSocketAddress;
 public class RunServer {
 
     // todo use yaml config file
-    private static final String DATA_PATH = "./resources/data.txt";
+    private static final String CONFIG_FILE_PATH = "/ua/artcode/udiary/config/app.properties";
 
     public static void main(String[] args) throws Exception {
+
+        ConfigHolder ch = new ConfigHolder(
+                new File(RunServer.class.getResource(CONFIG_FILE_PATH).getFile()).getAbsolutePath());
+
+        File file = new File(RunServer.class.getResource(ch.getProperty("app.db.path")).getFile());
+
         MainController mainController = new MainControllerImpl(
-                                            new UserDaoJsonImpl(DATA_PATH));
+                                            new UserDaoJsonImpl(file.getAbsolutePath()));
 
 
         HttpServer server = HttpServer.create();
 
         // todo take port from config also
-        server.bind(new InetSocketAddress(8000), 0);
+        server.bind(new InetSocketAddress(Integer.parseInt(ch.getProperty("app.port"))), 0);
 
         HttpContext context =
                 server.createContext("/add-record", new AddRecordHandler(mainController));
@@ -38,6 +44,10 @@ public class RunServer {
         server.createContext("/", new HelloHandler());
 
         server.createContext("/get-record", new GetRecordHandler(mainController));
+
+        File staticFolder =
+                new File(RunServer.class.getResource(ch.getProperty("app.web.static")).getFile());
+        server.createContext("/view", new StaticFilesHandler(staticFolder.getAbsolutePath()));
 
 
         server.setExecutor(null);
