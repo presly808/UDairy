@@ -25,46 +25,23 @@ public class UserBuilder {
     /**
      * Constructor.
      *
-     * @param target User object, which we want to build.
-     *               It must be NotNull!
-     * @throws NullPointerException when parameter is null.
      * @see User
      * */
-    public UserBuilder(@NotNull User target) throws NullPointerException {
-        if (target == null) {
-            throw new NullPointerException("target is null");
-        }
-        this.target = target;
+    public UserBuilder() {
+        target = new User();
     }
 
 
     // Getters and setters:
     /**
-     * Target getter.
+     * Builds new User by target pattern.
      *
-     * @return target User object, which we are building.
-     * It is NotNull!
+     * @return User object, which we are building.
      * @see User
      **/
-    public User getTarget() {
-        return target;
+    public User build() {
+        return new User(target.getId(), target.getEmail(), target.getPass(), target.getDairyList());
     }
-
-    /**
-     * Target setter.
-     *
-     * @param target User object, which we want to build.
-     *               It must be NotNull!
-     * @throws NullPointerException when parameter is null.
-     * @see User
-     **/
-    public void setTarget(@NotNull User target) throws NullPointerException {
-        if (target == null) {
-            throw new NullPointerException("target is null");
-        }
-        this.target = target;
-    }
-
 
     // Methods:
     /**
@@ -113,7 +90,9 @@ public class UserBuilder {
      *              target User object. It must be NotNull!
      * @return ref to current UserBuilder object. Allows chaining.
      * @throws NullPointerException when parameter is null.
+     *
      * @see User
+     * @see NullPointerException
      * */
     public UserBuilder dairyList(@NotNull List<Dairy> newDairyList) throws NullPointerException {
         if (newDairyList == null) {
