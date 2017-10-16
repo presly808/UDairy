@@ -9,6 +9,7 @@ import ua.artcode.udiary.utils.NotificationUtils;
 import ua.artcode.udiary.utils.Validator;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
 
 
 /**
@@ -53,7 +54,8 @@ public class MainControllerImpl implements MainController {
         if(!Validator.verifyUserSignIn(userDao.findAll(), newUser)) {
             throw new AppException("user with such email already exists");
         }
-        NotificationUtils.sendMail(newUser);
+
+        CompletableFuture.runAsync(() -> NotificationUtils.sendMail(newUser));
 
         return userDao.save(newUser);
     }

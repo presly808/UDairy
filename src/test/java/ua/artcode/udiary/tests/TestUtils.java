@@ -21,6 +21,7 @@ import static junit.framework.TestCase.*;
 import org.skyscreamer.jsonassert.JSONAssert;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
+import ua.artcode.udiary.utils.ClassPathUtils;
 import ua.artcode.udiary.utils.JsonUtils;
 import ua.artcode.udiary.utils.Validator;
 
@@ -131,7 +132,7 @@ public class TestUtils {
 
     @Test
     public void readJsonFromFile() throws JSONException {
-        JSONAssert.assertEquals(JsonUtils.readJsonFromFile("resources/UDairy_json_in.txt"),
+        JSONAssert.assertEquals(JsonUtils.readJsonFromFile(ClassPathUtils.classpathToAbsolutePath("/UDairy_json_in.txt")),
                 "{\"id\":\"1\"," +
                         "\"user\":{\"id\":0,\"email\":\"mail1@mail.com\",\"pass\":\"pass1\"}," +
                         "\"title\":\"Title1\",\"body\":\"Body1\"}", false);
@@ -149,8 +150,8 @@ public class TestUtils {
                 "\"title\":\"Title2\"," +
                 "\"body\":\"Body2\"}\n";
 
-        assertTrue(JsonUtils.writeJsonToFile("resources/UDairy_json_out.txt", initJson));
-        JSONAssert.assertEquals(readFromFile("resources/UDairy_json_out.txt"),
+        assertTrue(JsonUtils.writeJsonToFile("UDairy_json_out.txt", initJson));
+        JSONAssert.assertEquals(readFromFile("UDairy_json_out.txt"),
                 "{\"id\":\"2\"," +
                         "\"user\":{\"id\":2,\"email\":\"mail2@mail.com\",\"pass\":\"pass2\"}," +
                         "\"title\":\"Title2\"," +

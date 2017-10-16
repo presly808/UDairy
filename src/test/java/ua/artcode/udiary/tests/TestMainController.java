@@ -122,208 +122,155 @@ public class TestMainController {
 
     }
 
+    @Test(expected = AppException.class)
+    public void logInUserNullPass() throws AppException {
+
+        User testUser = new User("u_email", "u_pass");
+        mainController.logInUser(new User(testUser.getEmail(), null));
+        Assert.fail("wasn't caught AppException");
+
+    }
+
     @Test
-    public void logInUserNullPass() {
+    public void addRecordDeprecatedCorrect() throws AppException {
+
+        // todo where is assert???
+        mainController.addRecord(new Record(null, "abc", "defg", null));
+
+    }
+
+    @Test(expected = AppException.class)
+    public void addRecordDeprecatedWrong() throws AppException {
+
+        mainController.addRecord(null);
+
+    }
+
+    @Test
+    public void addRecordCorrect() throws AppException {
+
+        User testUser = mainController.addUser(new User("email", "pass"));
+        Dairy testDairy = mainController.addDairy(testUser.getId(), new Dairy());
+        mainController.addRecord(testUser.getId(), testDairy.getId(), new Record("title", "body"));
+
+    }
+
+    @Test(expected = AppException.class)
+    public void addRecordNull() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        String dairyId = mainController.addDairy(userId, new Dairy()).getId();
+        mainController.addRecord(userId, dairyId, null);
+
+
+    }
+
+    @Test(expected = AppException.class)
+    public void addRecordWrongUserId() throws AppException {
         // must catch exception:
-        try {
-            User testUser = new User("u_email", "u_pass");
-            mainController.logInUser(new User(testUser.getEmail(), null));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+
+        // TODO in our tests addUser method always send mail message, we must turn off mail notification during unit tests
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        String dairyId = mainController.addDairy(userId, new Dairy()).getId();
+        mainController.addRecord(123, dairyId, new Record("title", "body"));
+        Assert.fail("wasn't caught AppException");
+
     }
 
-    @Test
-    public void addRecordDeprecatedCorrect() {
-        // must not catch exception:
-        try {
-            mainController.addRecord(new Record(null, "abc", "defg", null));
-        } catch (AppException e) {
-            e.printStackTrace();
-            Assert.fail("was caught AppException");
-        }
-    }
-
-    @Test
-    public void addRecordDeprecatedWrong() {
+    @Test(expected = AppException.class)
+    public void addRecordWrongDairyId() throws AppException {
         // must catch exception:
-        try {
-            mainController.addRecord(null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        mainController.addDairy(userId, new Dairy()).getId();
+        mainController.addRecord(userId, "trap_id", new Record("title", "body"));
+        Assert.fail("wasn't caught AppException");
+
     }
 
     @Test
-    public void addRecordCorrect() {
-        // must not catch exception:
-        try {
-            User testUser = mainController.addUser(new User("email", "pass"));
-            Dairy testDairy = mainController.addDairy(testUser.getId(), new Dairy());
-            mainController.addRecord(testUser.getId(), testDairy.getId(), new Record("title", "body"));
-        } catch (AppException e) {
-            e.printStackTrace();
-            Assert.fail("was caught AppException");
-        }
+    public void getRecordByIdCorrect() throws AppException {
+
+        User testUser = mainController.addUser(new User("email", "pass"));
+        Dairy testDairy = mainController.addDairy(testUser.getId(), new Dairy());
+        Record testRecord = mainController.addRecord(testUser.getId(), testDairy.getId(),
+                new Record("record_title", "record_body"));
+        Assert.assertEquals(testRecord, mainController.getRecordById(testRecord.getId()));
+
+    }
+
+    @Test(expected = AppException.class)
+    public void getRecordByIdWrong() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        String dairyId = mainController.addDairy(userId, new Dairy()).getId();
+        String recordId = mainController.addRecord(userId, dairyId,
+                new Record("title", "body")).getId();
+        mainController.getRecordById(recordId + "1");
+        Assert.fail("wasn't caught AppException");
+
+    }
+
+    @Test(expected = AppException.class)
+    public void getRecordByIdNull() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        String dairyId = mainController.addDairy(userId, new Dairy()).getId();
+        mainController.addRecord(userId, dairyId, new Record("title", "body"));
+        mainController.getRecordById(null);
+        Assert.fail("wasn't caught AppException");
+
     }
 
     @Test
-    public void addRecordNull() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            String dairyId = mainController.addDairy(userId, new Dairy()).getId();
-            mainController.addRecord(userId, dairyId, null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+    public void addDairyCorrect() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        Dairy testDairy = mainController.addDairy(userId, new Dairy("title"));
+        Assert.assertEquals(testDairy, new Dairy("title"));
+
+    }
+
+    @Test(expected = AppException.class)
+    public void addDairyNull() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        mainController.addDairy(userId, null);
+
+    }
+
+    @Test(expected = AppException.class)
+    public void addDairyWrongUserId() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        mainController.addDairy(userId + 1, new Dairy("title"));
+
     }
 
     @Test
-    public void addRecordWrongUserId() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            String dairyId = mainController.addDairy(userId, new Dairy()).getId();
-            mainController.addRecord(123, dairyId, new Record("title", "body"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+    public void getDairyById() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        String dairyId = mainController.addDairy(userId, new Dairy("title")).getId();
+        Assert.assertEquals(mainController.getDairyById(dairyId), new Dairy("title"));
+
     }
 
-    @Test
-    public void addRecordWrongDairyId() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            mainController.addDairy(userId, new Dairy()).getId();
-            mainController.addRecord(userId, "trap_id", new Record("title", "body"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+    @Test(expected = AppException.class)
+    public void getDairyByIdNull() throws AppException {
+
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        mainController.addDairy(userId, new Dairy("title"));
+        mainController.getDairyById(null);
     }
 
-    @Test
-    public void getRecordByIdCorrect() {
-        // must not catch exception:
-        try {
-            User testUser = mainController.addUser(new User("email", "pass"));
-            Dairy testDairy = mainController.addDairy(testUser.getId(), new Dairy());
-            Record testRecord = mainController.addRecord(testUser.getId(), testDairy.getId(),
-                    new Record("record_title", "record_body"));
-            Assert.assertEquals(testRecord, mainController.getRecordById(testRecord.getId()));
-        } catch (AppException e) {
-            e.printStackTrace();
-            Assert.fail("was caught AppException");
-        }
-    }
+    @Test(expected = AppException.class)
+    public void getDairyByIdWrongId() throws AppException {
 
-    @Test
-    public void getRecordByIdWrong() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            String dairyId = mainController.addDairy(userId, new Dairy()).getId();
-            String recordId = mainController.addRecord(userId, dairyId,
-                    new Record("title", "body")).getId();
-            mainController.getRecordById(recordId + "1");
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
-    }
+        long userId = mainController.addUser(new User("email", "pass")).getId();
+        String dairyId = mainController.addDairy(userId, new Dairy("title")).getId();
+        mainController.getDairyById(dairyId + "1");
 
-    @Test
-    public void getRecordByIdNull() {
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            String dairyId = mainController.addDairy(userId, new Dairy()).getId();
-            mainController.addRecord(userId, dairyId, new Record("title", "body"));
-            mainController.getRecordById(null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
-    }
 
-    @Test
-    public void addDairyCorrect() {
-        // must not catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            Dairy testDairy = mainController.addDairy(userId, new Dairy("title"));
-            Assert.assertEquals(testDairy, new Dairy("title"));
-        } catch (AppException e) {
-            e.printStackTrace();
-            Assert.fail("was caught AppException");
-        }
-    }
-
-    @Test
-    public void addDairyNull() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            mainController.addDairy(userId, null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
-    }
-
-    @Test
-    public void addDairyWrongUserId() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            mainController.addDairy(userId + 1, new Dairy("title"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
-    }
-
-    @Test
-    public void getDairyById() {
-        // must not catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            String dairyId = mainController.addDairy(userId, new Dairy("title")).getId();
-            Assert.assertEquals(mainController.getDairyById(dairyId), new Dairy("title"));
-        } catch (AppException e) {
-            e.printStackTrace();
-            Assert.fail("was caught AppException");
-        }
-    }
-
-    @Test
-    public void getDairyByIdNull() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            mainController.addDairy(userId, new Dairy("title"));
-            mainController.getDairyById(null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
-    }
-
-    @Test
-    public void getDairyByIdWrongId() {
-        // must catch exception:
-        try {
-            long userId = mainController.addUser(new User("email", "pass")).getId();
-            String dairyId = mainController.addDairy(userId, new Dairy("title")).getId();
-            mainController.getDairyById(dairyId + "1");
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
     }
 }
