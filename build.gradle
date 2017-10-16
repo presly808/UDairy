@@ -39,3 +39,9 @@ task startServer(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     main = "ua.artcode.udiary.RunServer"
 }
+
+sourceSets {
+    main {
+        output.resourcesDir = "build/classes/main"
+    }
+}
