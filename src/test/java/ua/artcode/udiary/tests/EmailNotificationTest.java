@@ -1,4 +1,4 @@
-package ua.artcode.udiary.tests.mockitoTests;
+package ua.artcode.udiary.tests;
 
 import org.junit.Test;
 import static org.mockito.Mockito.*;
@@ -8,6 +8,9 @@ import ua.artcode.udiary.utils.NotificationUtils;
 public class EmailNotificationTest {
 
 
+    // todo  where is assert?
+    // not valid test
+    // we dont need mocks
     @Test
     public void testNotification(){
 

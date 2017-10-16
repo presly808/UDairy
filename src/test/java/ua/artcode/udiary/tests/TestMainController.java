@@ -39,118 +39,87 @@ public class TestMainController {
         }
     }
 
-    @Test
-    public void addUserNotUnique() {
+    @Test(expected = AppException.class)
+    public void addUserNotUnique() throws AppException {
         // must catch exception
-        try {
-            mainController.addUser(new User("abc", "111"));
-            mainController.addUser(new User("abc", "333"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+
+        mainController.addUser(new User("abc", "111"));
+        mainController.addUser(new User("abc", "333"));
+
     }
 
-    @Test
-    public void addUserNull() {
+    @Test(expected = AppException.class)
+    public void addUserNull() throws AppException {
         // must catch exception
-        try {
-            mainController.addUser(null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+
+        mainController.addUser(null);
+
     }
 
     @Test
-    public void getUserByIdCorrect() {
+    public void getUserByIdCorrect() throws AppException {
 
+        User testUser = new User("abc", "111");
+        User testUserCopy = new User("abc", "111");
+        testUser = mainController.addUser(testUser);
+        Assert.assertEquals(testUserCopy, mainController.getUserById(testUser.getId()));
 
-        // must not catch exception:
-        try {
-            User testUser = new User("abc", "111");
-            User testUserCopy = new User("abc", "111");
-            testUser = mainController.addUser(testUser);
-            Assert.assertEquals(testUserCopy, mainController.getUserById(testUser.getId()));
-        } catch (AppException e) {
-            e.printStackTrace();
-            Assert.fail("was caught AppException");
-        }
+    }
+
+    @Test(expected = AppException.class)
+    public void getUserByIdWrong() throws AppException {
+
+        User testUser = mainController.addUser(new User("email", "pass"));
+        mainController.getUserById(testUser.getId() + 1);
+        Assert.fail("wasn't caught AppException");
+
     }
 
     @Test
-    public void getUserByIdWrong() {
-        // must catch exception:
-        try {
-            User testUser = mainController.addUser(new User("email", "pass"));
-            mainController.getUserById(testUser.getId() + 1);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
-    }
-
-    @Test
-    public void logInUserCorrect() {
+    public void logInUserCorrect() throws AppException {
         User testUser = new User("abc", "111");
 
         // must not catch exception:
-        try {
-            testUser = mainController.addUser(testUser);
-            Assert.assertEquals(testUser,
-                    mainController.logInUser(new User(testUser.getEmail(), testUser.getPass())));
-        } catch (AppException e) {
-            e.printStackTrace();
-            Assert.fail("was caught AppException");
-        }
+
+        testUser = mainController.addUser(testUser);
+        Assert.assertEquals(testUser,
+                mainController.logInUser(new User(testUser.getEmail(), testUser.getPass())));
+
     }
 
-    @Test
-    public void logInUserNull() {
+    @Test(expected = AppException.class)
+    public void logInUserNull() throws AppException {
         // must catch exception:
-        try {
-            mainController.addUser(new User("email", "pass"));
-            mainController.logInUser(null);
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+
+        mainController.addUser(new User("email", "pass"));
+        mainController.logInUser(null);
+        Assert.fail("wasn't caught AppException");
+
     }
 
-    @Test
-    public void logInUserWrongEmail() {
-        // must catch exception:
-        try {
-            User testUser = new User("u_email", "u_pass");
-            mainController.logInUser(new User("email", testUser.getPass()));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+    @Test(expected = AppException.class)
+    public void logInUserWrongEmail() throws AppException {
+
+        User testUser = new User("u_email", "u_pass");
+        mainController.logInUser(new User("email", testUser.getPass()));
+
     }
 
-    @Test
-    public void logInUserWrongPass() {
-        // must catch exception:
-        try {
-            User testUser = new User("u_email", "u_pass");
-            mainController.logInUser(new User(testUser.getEmail(), "pass"));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+    @Test(expected = AppException.class)
+    public void logInUserWrongPass() throws AppException {
+
+        User testUser = new User("u_email", "u_pass");
+        mainController.logInUser(new User(testUser.getEmail(), "pass"));
+        Assert.fail("wasn't caught AppException");
+
     }
 
-    @Test
-    public void logInUserNullEmail() {
-        // must catch exception:
-        try {
-            User testUser = new User("u_email", "u_pass");
-            mainController.logInUser(new User(null, testUser.getPass()));
-            Assert.fail("wasn't caught AppException");
-        } catch (AppException ignored) {
-            ignored.printStackTrace();
-        }
+    @Test(expected = AppException.class)
+    public void logInUserNullEmail() throws AppException {
+
+        User testUser = new User("u_email", "u_pass");
+        mainController.logInUser(new User(null, testUser.getPass()));
+
     }
 
     @Test

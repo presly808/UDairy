@@ -11,12 +11,14 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.TestCase.*;
 
+import org.skyscreamer.jsonassert.JSONAssert;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.JsonUtils;
@@ -53,10 +55,9 @@ public class TestUtils {
         log.info("Logger is set.");
     }
 
-    @Ignore
-    // public class JsonUtils
+
     @Test
-    public void checkJsonToString() {
+    public void checkJsonToString() throws JSONException {
         String testStr = "{\n" +
                 "\n" +
                 "\t\"title\":\"newRecord\",\n" +
@@ -65,8 +66,7 @@ public class TestUtils {
                 "}";
 
         InputStream requestBody = new ByteArrayInputStream(testStr.getBytes());
-        //todo use lib for comparing jsons
-        //assertEquals(JsonUtils.jsonToString(requestBody), testStr);
+        JSONAssert.assertEquals(JsonUtils.jsonToString(requestBody), testStr, false);
 
         log.info("Test passed.");
     }
@@ -110,7 +110,7 @@ public class TestUtils {
     }
 
     @Test
-    public void toJson() {
+    public void toJson() throws JSONException {
 
         Record record = new Record();
         User user = new User("mail1@mail.com", "pass1");
@@ -123,18 +123,18 @@ public class TestUtils {
                 "\"title\":\"Title1\"," +
                 "\"body\":\"Body1\"}";
         //todo use lib for comparing jsons
-//        assertEquals(GSON.toJson(record), expectedJson);
+
+        JSONAssert.assertEquals(GSON.toJson(record), expectedJson, false);
 
         log.info("Test passed.");
     }
 
-    @Ignore
     @Test
-    public void readJsonFromFile() {
-        assertEquals(JsonUtils.readJsonFromFile("resources/UDairy_json_in.txt"),
+    public void readJsonFromFile() throws JSONException {
+        JSONAssert.assertEquals(JsonUtils.readJsonFromFile("resources/UDairy_json_in.txt"),
                 "{\"id\":\"1\"," +
                         "\"user\":{\"id\":0,\"email\":\"mail1@mail.com\",\"pass\":\"pass1\"}," +
-                        "\"title\":\"Title1\",\"body\":\"Body1\"}");
+                        "\"title\":\"Title1\",\"body\":\"Body1\"}", false);
 
         log.info("Test passed.");
     }
@@ -142,7 +142,7 @@ public class TestUtils {
 
     // todo remove files after tests
     @Test
-    public void writeJsonToFile() {
+    public void writeJsonToFile() throws JSONException {
 
         String initJson = "{\"id\":\"2\"," +
                 "\"user\":{\"id\":2,\"email\":\"mail2@mail.com\",\"pass\":\"pass2\"}," +
@@ -150,11 +150,11 @@ public class TestUtils {
                 "\"body\":\"Body2\"}\n";
 
         assertTrue(JsonUtils.writeJsonToFile("resources/UDairy_json_out.txt", initJson));
-        assertEquals(readFromFile("resources/UDairy_json_out.txt"),
+        JSONAssert.assertEquals(readFromFile("resources/UDairy_json_out.txt"),
                 "{\"id\":\"2\"," +
                         "\"user\":{\"id\":2,\"email\":\"mail2@mail.com\",\"pass\":\"pass2\"}," +
                         "\"title\":\"Title2\"," +
-                        "\"body\":\"Body2\"}");
+                        "\"body\":\"Body2\"}",false);
 
         log.info("Test passed.");
     }

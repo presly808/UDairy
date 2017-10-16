@@ -1,5 +1,11 @@
 * Project Description
 
+* Open Gradle Project
+    Since We had set up gradle for dependencies and test running, you should open project as gradle project
+    https://spring.io/guides/gs/intellij-idea/
+
+    !!!! BEFORE COMMIT or PUSH, RUN ALL TESTS!!! ESSENTIAL STEP
+
 * New Task LifeCycle
 
     * Update Project Ctrl + T

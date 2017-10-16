@@ -23,8 +23,9 @@ public class ConfigHolderTest {
     @Before
     public void before() throws IOException {
 
+        String file = ConfigHolderTest.class.getResource(CONFIG_FILE_PATH).getFile();
         configHolder = new ConfigHolder(
-                new File(ConfigHolderTest.class.getResource(CONFIG_FILE_PATH).getFile()).getPath());
+                new File(file).getPath());
     }
 
     @Test
