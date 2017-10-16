@@ -27,10 +27,15 @@ dependencies {
     testCompile group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
 
 
+}
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'ua.artcode.udiary.RunServer'
+    }
+}
 
-
-
-
-
+task startServer(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "ua.artcode.udiary.RunServer"
 }

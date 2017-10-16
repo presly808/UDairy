@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class ConfigHolderTest {
 
 
-    private static final String CONFIG_FILE_PATH = "/ua/artcode/udiary/config/app.properties";
+    private static final String CONFIG_FILE_PATH = "/app.properties";
     private ConfigHolder configHolder;
 
     @Before

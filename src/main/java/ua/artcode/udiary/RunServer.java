@@ -1,6 +1,5 @@
 package ua.artcode.udiary;
 
-import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import ua.artcode.udiary.config.ConfigHolder;
 import ua.artcode.udiary.controller.MainController;
@@ -10,7 +9,6 @@ import ua.artcode.udiary.rest.*;
 
 import java.io.File;
 import java.net.InetSocketAddress;
-import java.util.concurrent.Executor;
 
 /**
  * Created by serhii on 07.10.17.
@@ -18,7 +16,7 @@ import java.util.concurrent.Executor;
 public class RunServer {
 
     // todo use yaml config file
-    private static final String CONFIG_FILE_PATH = "/ua/artcode/udiary/config/app.properties";
+    private static final String CONFIG_FILE_PATH = "/app.properties";
 
     public static void main(String[] args) throws Exception {
 
