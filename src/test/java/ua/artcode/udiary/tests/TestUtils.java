@@ -30,6 +30,7 @@ public class TestUtils {
     private static final Gson GSON = new Gson();
     private static Logger log = Logger.getLogger("TestUtils");
 
+    // todo extract to Utils
     private static String readFromFile(String filePath) {
 
         String result = null;

@@ -6,6 +6,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+// todo not static, we will be able to mock
 public class NotificationUtils {
 
     // todo use configuration. ConfigHolder ch = ObjectHolder.get("ConfigHolder");
@@ -17,6 +18,7 @@ public class NotificationUtils {
 
     /*write validate letter maybe in future import mail from txt file*/
 
+    // todo pass (to..., title, body)
     public static void sendMail(User user){
         // todo init session , only one time, prepare message
         String to = user.getEmail();

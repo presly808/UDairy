@@ -20,9 +20,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+// todo test only UserDao, do not depend on implementation, just tell about impl in setUp
 public class TestUserDaoJsonImpl {
 
-    // todo
     private static final String PATH = "testdata.txt";
     private UserDao userDaoJsonImpl;
 

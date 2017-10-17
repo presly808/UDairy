@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 /**
  * Created by serhii on 15.10.17.
  */
-@Ignore
 public class ConfigHolderTest {
 
 

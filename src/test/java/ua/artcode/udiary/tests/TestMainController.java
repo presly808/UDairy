@@ -18,6 +18,7 @@ public class TestMainController {
 
     private MainController mainController;
 
+    // todo mock emailNotification
     @Before
     public void prepareTest() {
         AppDataContainer appDataContainer = new AppDataContainer();
@@ -71,7 +72,6 @@ public class TestMainController {
 
         User testUser = mainController.addUser(new User("email", "pass"));
         mainController.getUserById(testUser.getId() + 1);
-        Assert.fail("wasn't caught AppException");
 
     }
 
