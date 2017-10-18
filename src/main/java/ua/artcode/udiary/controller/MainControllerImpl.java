@@ -5,9 +5,11 @@ import ua.artcode.udiary.dao.RecordDao;
 import ua.artcode.udiary.dao.UserDao;
 import ua.artcode.udiary.exception.AppException;
 import ua.artcode.udiary.model.*;
-import ua.artcode.udiary.utils.NotificationUtils;
+import ua.artcode.udiary.utils.EmailNotificator;
 import ua.artcode.udiary.utils.Validator;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,6 +27,8 @@ public class MainControllerImpl implements MainController {
 
     private UserDao userDao;
 
+    private EmailNotificator emailNotificator;
+
 
     // Constructors:
 
@@ -36,6 +40,14 @@ public class MainControllerImpl implements MainController {
         this.recordDao = recordDao;
         this.dairyDao = dairyDao;
         this.userDao = userDao;
+
+    }
+
+    public MainControllerImpl(RecordDao recordDao, DairyDao dairyDao, UserDao userDao, EmailNotificator emailNotificator) {
+        this.recordDao = recordDao;
+        this.dairyDao = dairyDao;
+        this.userDao = userDao;
+        this.emailNotificator = emailNotificator;
     }
 
     public MainControllerImpl(UserDao userDao) {
@@ -51,12 +63,16 @@ public class MainControllerImpl implements MainController {
         Validator.validateUser(newUser);
 
         // verify by email not to save to DB new user with existing email.
-        if(!Validator.verifyUserSignIn(userDao.findAll(), newUser)) {
+        if (!Validator.verifyUserSignIn(userDao.findAll(), newUser)) {
             throw new AppException("user with such email already exists");
         }
-
-        CompletableFuture.runAsync(() -> NotificationUtils.sendMail(newUser));
-
+        CompletableFuture.runAsync(() -> {
+            try {
+                emailNotificator.sendOnUserRegister(newUser);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        });
         return userDao.save(newUser);
     }
 

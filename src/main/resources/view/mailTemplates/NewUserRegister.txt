@@ -1,0 +1,6 @@
+Welcome to UDairy!
+
+Congratulations, your registration has passed successfully
+==================
+Your login: %s
+Your password: %s

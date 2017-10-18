@@ -1,8 +1,7 @@
 package ua.artcode.udiary.utils;
 
 import com.google.gson.Gson;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import ua.artcode.udiary.model.Record;
+
 
 import java.io.*;
 
