@@ -3,6 +3,7 @@ package ua.artcode.udiary.dao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.utils.JsonUtils;
 
@@ -11,8 +12,12 @@ import java.util.*;
 
 public class RecordDaoJsonImpl implements RecordDao {
 
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private Gson gson;
     private static final String RECORDS_PATH = "./src/ua/artcode/udiary/resources/record/records.txt";
+
+    public RecordDaoJsonImpl() {
+        gson = ObjectHolder.getObject("gson",Gson.class);;
+    }
 
     @Override
     public Record save(Record record) {

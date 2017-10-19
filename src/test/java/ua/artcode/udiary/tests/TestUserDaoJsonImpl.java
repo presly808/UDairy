@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.dao.UserDao;
 import ua.artcode.udiary.dao.UserDaoJsonImpl;
 import ua.artcode.udiary.model.Dairy;
@@ -26,10 +27,6 @@ public class TestUserDaoJsonImpl {
     private static final String PATH = "testdata.txt";
     private UserDao userDaoJsonImpl;
 
-    // todo singleton, Gson gson = ObjectHolder.get("gson")
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private Type userType = new TypeToken<List<User>>(){}.getType();
-
     @Before
     public void setUp() {
 
@@ -38,6 +35,9 @@ public class TestUserDaoJsonImpl {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Gson gson = ObjectHolder.getObject("gson",Gson.class);
+        Type userListType =  ObjectHolder.getObject("userListType",Type.class);
 
         Record testRecord1 = new Record("Key1", "TestTitle1", "TestBody1", null);
         Record testRecord2 = new Record("Key2", "TestTitle2", "TestBody2", null);
@@ -67,7 +67,7 @@ public class TestUserDaoJsonImpl {
 
         testUsers.add(user1);
 
-        String usersJson = gson.toJson(testUsers, userType);
+        String usersJson = gson.toJson(testUsers, userListType);
         JsonUtils.writeJsonToFile(PATH, usersJson);
 
         userDaoJsonImpl = new UserDaoJsonImpl(PATH);
@@ -75,10 +75,6 @@ public class TestUserDaoJsonImpl {
 
     @After
     public void tearDown() {
-        String usersJson = gson.toJson(null, userType);
-
-        JsonUtils.writeJsonToFile(PATH, usersJson);
-
         //todo test this place
         new File(PATH).delete();
     }
