@@ -12,10 +12,7 @@ import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.model.UserBuilder;
 import ua.artcode.udiary.utils.EmailNotificator;
 
-import javax.mail.AuthenticationFailedException;
-import javax.mail.MessagingException;
-import javax.mail.SendFailedException;
-import javax.mail.Session;
+import javax.mail.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,8 +40,9 @@ public class EmailNotificatorTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchFieldException, IllegalAccessException {
         em = new EmailNotificator(ch);
+        em.useTransportSend = false;
     }
 
 
@@ -63,10 +61,11 @@ public class EmailNotificatorTest {
 
     @Test(expected = MessagingException.class)
     public void negativeSendMail() throws MessagingException {
+        em.useTransportSend = true;
         em.sendMail("testemailexample.com", "subject", "body");
 
     }
-    
+
 
 
 

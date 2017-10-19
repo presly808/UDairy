@@ -12,6 +12,7 @@ import java.util.Properties;
 // todo not static, we will be able to mock
 public class EmailNotificator {
 
+    public boolean useTransportSend = true;
     private String userMail;
     private String userPass;
     private Session session;
@@ -60,7 +61,9 @@ public class EmailNotificator {
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         message.setSubject(emailSubject);
         message.setText(body);
-        Transport.send(message);
+        if (useTransportSend){
+            Transport.send(message);
+        }
         System.out.println("Send message successfully....");
 
     }

@@ -66,6 +66,7 @@ public class MainControllerImpl implements MainController {
         if (!Validator.verifyUserSignIn(userDao.findAll(), newUser)) {
             throw new AppException("user with such email already exists");
         }
+
         CompletableFuture.runAsync(() -> {
             try {
                 emailNotificator.sendOnUserRegister(newUser);
