@@ -17,7 +17,7 @@
     <h1>UDairy</h1>
     <div class="navigation">
 
-        <a href="/view/html/sign-up.html">sign up</a> |
+        <a href="/view/html/sign-up.html">sign up</a>
         <a href="/view/html/sign-in.html">sign in</a>
 
     </div>
@@ -34,7 +34,11 @@
                 <dd><input id="email" type="text" name="email" size="30" value=""></dd>
                 <dt>Password:</dt>
                 <dd><input id="pass" type="password" name="password" size="30"></dd>
+                
+                <dt id="wrongConfirmPass" style="color: red; display: none;">!</dt>
 
+                <dt>Confirm password:</dt>
+                <dd><input id="confPass" type="password" name="confirmPassword" size="30"></dd>
             </dl>
         </form>
         <div class="actions"><input id="submitButton" type="button" value="Sign Up"></div>
@@ -50,25 +54,45 @@
 
   function sendRegisterForm(){
     var username = document.getElementById("username").value;
-    var email = document.getElementById("email").value;
     var pass = document.getElementById("pass").value;
+    var confPass = document.getElementById("confPass").value;
+    var email = document.getElementById("email").value;
+    var emailValidator = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/;
 
-    var obj = {username : username, email : email, pass: pass};
+    if(!emailValidator.test(email)){
+      document.getElementById('wrongConfirmPass').style.display = "inline";
+      document.getElementById('wrongConfirmPass').innerHTML = "Sorry, but entered E-Mail is not correct. Please try again";
+      document.getElementById("email").focus();
+      return false;
 
-    // construct an HTTP request
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/register", true);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    } else if(pass == "" || pass != confPass){
+      
+      document.getElementById('wrongConfirmPass').style.display = "inline";
+      document.getElementById('wrongConfirmPass').innerHTML = "Sorry, but yours passwords are not the same. Please try again";
+      document.getElementById("pass").value = "";
+      document.getElementById("confPass").value = "";
+      document.getElementById("pass").focus();
+      return false;
 
-    // send the collected data as JSON
-    xhr.send(JSON.stringify(obj));
+    } else {
 
-    xhr.onloadend = function (resp) {
-      console.log("req has been sucessful\n" + resp);
-      window.location.replace("/view/html/sign-in.html");
-    };
+      var obj = {username : username, email : email, pass: pass};
+      
+      // construct an HTTP request
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/register", true);
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
-  }
+      // send the collected data as JSON
+      xhr.send(JSON.stringify(obj));
+
+      xhr.onloadend = function (resp) {
+        console.log("req has been sucessful\n" + resp);
+        window.location.replace("/view/html/sign-in.html");
+      };
+    }
+  };
+
 
   function init() {
     document.getElementById("submitButton")
