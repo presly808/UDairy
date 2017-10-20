@@ -2,6 +2,7 @@ package ua.artcode.udiary;
 
 import com.sun.net.httpserver.HttpServer;
 import ua.artcode.udiary.config.ConfigHolder;
+import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.controller.MainController;
 import ua.artcode.udiary.controller.MainControllerImpl;
 import ua.artcode.udiary.dao.UserDaoJsonImpl;
@@ -16,12 +17,9 @@ import java.net.InetSocketAddress;
 public class RunServer {
 
     // todo use yaml config file
-    private static final String CONFIG_FILE_PATH = "/app.properties";
-
     public static void main(String[] args) throws Exception {
 
-        ConfigHolder ch = new ConfigHolder(
-                new File(RunServer.class.getResource(CONFIG_FILE_PATH).getFile()).getAbsolutePath());
+        ConfigHolder ch = ObjectHolder.getObject("ConfigHolder", ConfigHolder.class);
 
         File file = new File(RunServer.class.getResource(ch.getProperty("app.db.path")).getFile());
 

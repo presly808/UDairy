@@ -1,8 +1,6 @@
 package ua.artcode.udiary.dao;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.JsonUtils;
@@ -19,7 +17,7 @@ public class UserDaoJsonImpl implements UserDao{
     // todo get path from config
     private final String DATA_PATH;
 
-    Gson gson;
+    private Gson gson;
     private Type userListType;
     private List<User> userList;
 

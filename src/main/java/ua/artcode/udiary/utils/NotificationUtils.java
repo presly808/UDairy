@@ -1,4 +1,6 @@
 package ua.artcode.udiary.utils;
+import ua.artcode.udiary.config.ConfigHolder;
+import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.User;
 
 import javax.mail.*;
@@ -9,12 +11,10 @@ import java.util.Properties;
 // todo not static, we will be able to mock
 public class NotificationUtils {
 
-    // todo use configuration. ConfigHolder ch = ObjectHolder.get("ConfigHolder");
-    // ch.get("smtp.email")
-    // ch.get("smtp.pass")
-   private final static String USER_EMAIL = "UDairy.app@gmail.com";
-   private final static String USER_PASS = "udairyaco21";
-   private static String emailSubject = "Welcome to UDairy!";
+   private static ConfigHolder ch = ObjectHolder.getObject("ConfigHolder",ConfigHolder.class);
+   private final static String USER_EMAIL = ch.getProperty("smtp.email");
+   private final static String USER_PASS = ch.getProperty("smtp.pass");
+   private final static String WELCOME_SUBJECT = ch.getProperty("app.smtp.welcomesubj");
 
     /*write validate letter maybe in future import mail from txt file*/
 
@@ -40,7 +40,7 @@ public class NotificationUtils {
         try {
             message.setFrom(new InternetAddress(USER_EMAIL));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject(emailSubject);
+            message.setSubject(WELCOME_SUBJECT);
             String text = String.format("Welcome to UDairy! \n" +
                             " Congratulations, your registration has passed successfully \n \n" +
                             " Your login: %s \n" +
