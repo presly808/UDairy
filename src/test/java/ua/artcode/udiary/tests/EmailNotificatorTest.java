@@ -25,7 +25,7 @@ public class EmailNotificatorTest {
 
     @Before
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
-        ch = ObjectHolder.getObject("ConfigHolder",ConfigHolder.class);
+        ch = ObjectHolder.getObject("ConfigHolder", ConfigHolder.class);
         em = new EmailNotificator(ch);
         user = new UserBuilder()
                 .pass("oij")
@@ -34,7 +34,6 @@ public class EmailNotificatorTest {
                 .dairyList(new ArrayList<>())
                 .build();
     }
-
 
     @Test()
     public void positiveSendMail() throws MessagingException {

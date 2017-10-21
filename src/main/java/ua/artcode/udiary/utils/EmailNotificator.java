@@ -42,6 +42,7 @@ public class EmailNotificator {
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         message.setSubject(emailSubject);
         message.setText(body);
+
         Transport.send(message);
         System.out.println("Send message successfully....");
 
