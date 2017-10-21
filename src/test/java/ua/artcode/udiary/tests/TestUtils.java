@@ -24,7 +24,7 @@ import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.ClassPathUtils;
-import ua.artcode.udiary.utils.JsonUtils;
+import ua.artcode.udiary.utils.FileUtils;
 
 
 public class TestUtils {
@@ -69,7 +69,7 @@ public class TestUtils {
                 "}";
 
         InputStream requestBody = new ByteArrayInputStream(testStr.getBytes());
-        JSONAssert.assertEquals(JsonUtils.streamToStr(requestBody), testStr, false);
+        JSONAssert.assertEquals(FileUtils.streamToStr(requestBody), testStr, false);
 
         log.info("Test passed.");
     }
@@ -85,7 +85,7 @@ public class TestUtils {
                 "}";
 
         InputStream requestBody = new ByteArrayInputStream(testStr.getBytes());
-        Record record = JsonUtils.jsonStreamToObj(requestBody, Record.class);
+        Record record = FileUtils.jsonStreamToObj(requestBody, Record.class);
 
         assertNull(record.getId());
         assertEquals(record.getTitle(), "newRecord");
@@ -102,7 +102,7 @@ public class TestUtils {
                 "\"title\":\"Title1\"," +
                 "\"body\":\"Body1\"}";
 
-        Record record = JsonUtils.toObject(jsonString, Record.class);
+        Record record = FileUtils.toObject(jsonString, Record.class);
 
         assertTrue(record.getId().equals("1"));
         assertEquals(record.getTitle(), "Title1");
@@ -134,7 +134,7 @@ public class TestUtils {
 
     @Test
     public void readJsonFromFile() throws JSONException {
-        JSONAssert.assertEquals(JsonUtils.readJsonFromFile(ClassPathUtils.classpathToAbsolutePath("/UDairy_json_in.txt")),
+        JSONAssert.assertEquals(FileUtils.readContentFromFile(ClassPathUtils.classpathToAbsolutePath("/UDairy_json_in.txt")),
                 "{\"id\":\"1\"," +
                         "\"user\":{\"id\":0,\"email\":\"mail1@mail.com\",\"pass\":\"pass1\"}," +
                         "\"title\":\"Title1\",\"body\":\"Body1\"}", false);
@@ -153,7 +153,7 @@ public class TestUtils {
                 "\"body\":\"Body2\"}\n";
 
         String filePath = "UDairy_json_out.txt";
-        assertTrue(JsonUtils.writeContentToFile(filePath, initJson));
+        assertTrue(FileUtils.writeContentToFile(filePath, initJson));
 
         JSONAssert.assertEquals(readFromFile(filePath),
                 "{\"id\":\"2\"," +

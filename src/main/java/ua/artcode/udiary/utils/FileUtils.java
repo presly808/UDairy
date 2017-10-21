@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * Created by serhii on 07.10.17.
  */
-public class JsonUtils {
+public class FileUtils {
 
     private static final Gson GSON = ObjectHolder.getObject("gson",Gson.class);;
 
@@ -45,7 +45,7 @@ public class JsonUtils {
         return GSON.toJson(saved);
     }
 
-    public static String readJsonFromFile(String filePath) {
+    public static String readContentFromFile(String filePath) {
 
         try {
             return streamToStr(new FileInputStream(filePath));

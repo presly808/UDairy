@@ -3,7 +3,7 @@ package ua.artcode.udiary.dao;
 import com.google.gson.Gson;
 import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.User;
-import ua.artcode.udiary.utils.JsonUtils;
+import ua.artcode.udiary.utils.FileUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class UserDaoJsonImpl implements UserDao{
 
     public UserDaoJsonImpl(String path) {
         DATA_PATH = path;
-        String userListJson = JsonUtils.readJsonFromFile(path);
+        String userListJson = FileUtils.readContentFromFile(path);
 
         gson = ObjectHolder.getObject("gson",Gson.class);
         userListType =  ObjectHolder.getObject("userListType",Type.class);
@@ -44,7 +44,7 @@ public class UserDaoJsonImpl implements UserDao{
         String userListJson = gson.toJson(userList, userListType);
 
         // todo throw exception, not null
-        if (!JsonUtils.writeContentToFile(DATA_PATH, userListJson)) {
+        if (!FileUtils.writeContentToFile(DATA_PATH, userListJson)) {
             return null;
         }
 
@@ -84,7 +84,7 @@ public class UserDaoJsonImpl implements UserDao{
 
         String userListJson = gson.toJson(userList, userListType);
 
-        if (!JsonUtils.writeContentToFile(DATA_PATH, userListJson)) {
+        if (!FileUtils.writeContentToFile(DATA_PATH, userListJson)) {
             return null;
         }
 
@@ -104,7 +104,7 @@ public class UserDaoJsonImpl implements UserDao{
 
         String userListJson = gson.toJson(userList, userListType);
 
-        if (!JsonUtils.writeContentToFile(DATA_PATH, userListJson)) {
+        if (!FileUtils.writeContentToFile(DATA_PATH, userListJson)) {
             return null;
         }
 

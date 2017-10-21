@@ -22,6 +22,7 @@ public class RunServer {
 
         ConfigHolder ch = ObjectHolder.getObject("ConfigHolder", ConfigHolder.class);
 
+
         File file = new File(RunServer.class.getResource(ch.getProperty("app.db.path")).getFile());
 
         MainController mainController = new MainControllerImpl(

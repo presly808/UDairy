@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.udiary.controller.MainController;
 import ua.artcode.udiary.exception.AppException;
 import ua.artcode.udiary.model.Record;
-import ua.artcode.udiary.utils.JsonUtils;
+import ua.artcode.udiary.utils.FileUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,9 +25,9 @@ public class AddRecordHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         // get input json from httpExchange
-//        String jsonBody = JsonUtils.streamToStr(httpExchange.getRequestBody());
+//        String jsonBody = FileUtils.streamToStr(httpExchange.getRequestBody());
         // json -> object(model)
-        Record record = JsonUtils.jsonStreamToObj(httpExchange.getRequestBody(), Record.class);
+        Record record = FileUtils.jsonStreamToObj(httpExchange.getRequestBody(), Record.class);
 
         // call Controller (saveRecord)
         try {
@@ -40,7 +40,7 @@ public class AddRecordHandler implements HttpHandler {
                 System.out.println("Record '" + record.getTitle() + "' has been saved.");
             }
 
-            String savedRecordJson = JsonUtils.toJson(saved);
+            String savedRecordJson = FileUtils.toJson(saved);
 
             byte[] bytes = savedRecordJson.getBytes();
             httpExchange.sendResponseHeaders(200, bytes.length);

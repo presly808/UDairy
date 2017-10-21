@@ -3,7 +3,7 @@ package ua.artcode.udiary.rest;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.udiary.utils.HttpUtils;
-import ua.artcode.udiary.utils.JsonUtils;
+import ua.artcode.udiary.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class StaticFilesHandler implements HttpHandler {
         File file = new File(staticFilesFolder.getAbsolutePath() + query);
 
         if(file.exists() && file.isFile()){
-            String body = JsonUtils.readJsonFromFile(file.getAbsolutePath());
+            String body = FileUtils.readContentFromFile(file.getAbsolutePath());
             HttpUtils.sendResponse(httpExchange, body, 200);
         } else {
             HttpUtils.sendResponse(httpExchange, "Static file not found", 404);

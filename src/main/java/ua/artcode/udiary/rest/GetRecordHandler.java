@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.udiary.controller.MainController;
 import ua.artcode.udiary.exception.AppException;
 import ua.artcode.udiary.model.Record;
-import ua.artcode.udiary.utils.JsonUtils;
+import ua.artcode.udiary.utils.FileUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -40,7 +40,7 @@ public class GetRecordHandler implements HttpHandler {
                 System.out.println("Record '" + loaded.getTitle() + "' has been fetched.");
             }
 
-            String savedRecordJson = JsonUtils.toJson(loaded);
+            String savedRecordJson = FileUtils.toJson(loaded);
 
             byte[] bytes = savedRecordJson.getBytes();
             httpExchange.sendResponseHeaders(200, bytes.length);

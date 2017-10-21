@@ -11,7 +11,7 @@ import ua.artcode.udiary.dao.UserDaoJsonImpl;
 import ua.artcode.udiary.model.Dairy;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
-import ua.artcode.udiary.utils.JsonUtils;
+import ua.artcode.udiary.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class TestUserDaoJsonImpl {
         testUsers.add(user1);
 
         String usersJson = gson.toJson(testUsers, userListType);
-        JsonUtils.writeContentToFile(PATH, usersJson);
+        FileUtils.writeContentToFile(PATH, usersJson);
 
         userDaoJsonImpl = new UserDaoJsonImpl(PATH);
     }

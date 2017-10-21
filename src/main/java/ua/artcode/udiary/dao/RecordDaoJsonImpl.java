@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.Record;
-import ua.artcode.udiary.utils.JsonUtils;
+import ua.artcode.udiary.utils.FileUtils;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -25,7 +25,7 @@ public class RecordDaoJsonImpl implements RecordDao {
 
         record.setId(generatedKey);
 
-        String recordsJson = JsonUtils.readJsonFromFile(RECORDS_PATH);
+        String recordsJson = FileUtils.readContentFromFile(RECORDS_PATH);
         Type mapType = new TypeToken<Map<String,Record>>(){}.getType();
 
         Map<String,Record> records = gson.fromJson(recordsJson, mapType);
@@ -36,7 +36,7 @@ public class RecordDaoJsonImpl implements RecordDao {
         records.put(generatedKey,record);
         recordsJson = gson.toJson(records, mapType);
 
-        if (!JsonUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
+        if (!FileUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
             return null;
         }
 
@@ -46,7 +46,7 @@ public class RecordDaoJsonImpl implements RecordDao {
     @Override
     public Record findOne(String key) {
 
-        String recordsJson = JsonUtils.readJsonFromFile(RECORDS_PATH);
+        String recordsJson = FileUtils.readContentFromFile(RECORDS_PATH);
         Type mapType = new TypeToken<Map<String,Record>>(){}.getType();
 
         Map<String,Record> records = gson.fromJson(recordsJson, mapType);
@@ -61,7 +61,7 @@ public class RecordDaoJsonImpl implements RecordDao {
     @Override
     public List<Record> findAll() {
 
-        String recordsJson = JsonUtils.readJsonFromFile(RECORDS_PATH);
+        String recordsJson = FileUtils.readContentFromFile(RECORDS_PATH);
         Type mapType = new TypeToken<Map<String,Record>>(){}.getType();
 
         Map<String,Record> records = gson.fromJson(recordsJson, mapType);
@@ -82,7 +82,7 @@ public class RecordDaoJsonImpl implements RecordDao {
     @Override
     public Record delete(String key) {
 
-        String recordsJson = JsonUtils.readJsonFromFile(RECORDS_PATH);
+        String recordsJson = FileUtils.readContentFromFile(RECORDS_PATH);
         Type mapType = new TypeToken<Map<String,Record>>(){}.getType();
 
         Map<String,Record> records = gson.fromJson(recordsJson, mapType);
@@ -92,7 +92,7 @@ public class RecordDaoJsonImpl implements RecordDao {
 
             recordsJson = gson.toJson(records, mapType);
 
-            if (!JsonUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
+            if (!FileUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
                 return null;
             }
             return records.get(key);
@@ -104,7 +104,7 @@ public class RecordDaoJsonImpl implements RecordDao {
     @Override
     public Record update(Record record) {
 
-        String recordsJson = JsonUtils.readJsonFromFile(RECORDS_PATH);
+        String recordsJson = FileUtils.readContentFromFile(RECORDS_PATH);
         Type mapType = new TypeToken<Map<String, Record>>(){}.getType();
 
         Map<String, Record> records = gson.fromJson(recordsJson, mapType);
@@ -121,7 +121,7 @@ public class RecordDaoJsonImpl implements RecordDao {
 
             recordsJson = gson.toJson(records, mapType);
 
-            if (!JsonUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
+            if (!FileUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
                 return null;
             }
             return record;
