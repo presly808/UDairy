@@ -44,7 +44,7 @@ public class UserDaoJsonImpl implements UserDao{
         String userListJson = gson.toJson(userList, userListType);
 
         // todo throw exception, not null
-        if (!JsonUtils.writeJsonToFile(DATA_PATH, userListJson)) {
+        if (!JsonUtils.writeContentToFile(DATA_PATH, userListJson)) {
             return null;
         }
 
@@ -84,7 +84,7 @@ public class UserDaoJsonImpl implements UserDao{
 
         String userListJson = gson.toJson(userList, userListType);
 
-        if (!JsonUtils.writeJsonToFile(DATA_PATH, userListJson)) {
+        if (!JsonUtils.writeContentToFile(DATA_PATH, userListJson)) {
             return null;
         }
 
@@ -104,7 +104,7 @@ public class UserDaoJsonImpl implements UserDao{
 
         String userListJson = gson.toJson(userList, userListType);
 
-        if (!JsonUtils.writeJsonToFile(DATA_PATH, userListJson)) {
+        if (!JsonUtils.writeContentToFile(DATA_PATH, userListJson)) {
             return null;
         }
 

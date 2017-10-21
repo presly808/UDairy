@@ -110,7 +110,7 @@ public class TestMainController {
 
         User testUser = new User("u_email", "u_pass");
         mainController.logInUser(new User(testUser.getEmail(), "pass"));
-        Assert.fail("wasn't caught AppException");
+
 
     }
 

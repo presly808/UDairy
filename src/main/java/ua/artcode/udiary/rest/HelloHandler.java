@@ -10,6 +10,7 @@ import java.io.OutputStream;
 /**
  * Created by serhii on 07.10.17.
  */
+// todo remove
 public class HelloHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {

@@ -1,7 +1,6 @@
 package ua.artcode.udiary.dao;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.Record;
@@ -37,7 +36,7 @@ public class RecordDaoJsonImpl implements RecordDao {
         records.put(generatedKey,record);
         recordsJson = gson.toJson(records, mapType);
 
-        if (!JsonUtils.writeJsonToFile(RECORDS_PATH, recordsJson)) {
+        if (!JsonUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
             return null;
         }
 
@@ -93,7 +92,7 @@ public class RecordDaoJsonImpl implements RecordDao {
 
             recordsJson = gson.toJson(records, mapType);
 
-            if (!JsonUtils.writeJsonToFile(RECORDS_PATH, recordsJson)) {
+            if (!JsonUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
                 return null;
             }
             return records.get(key);
@@ -122,7 +121,7 @@ public class RecordDaoJsonImpl implements RecordDao {
 
             recordsJson = gson.toJson(records, mapType);
 
-            if (!JsonUtils.writeJsonToFile(RECORDS_PATH, recordsJson)) {
+            if (!JsonUtils.writeContentToFile(RECORDS_PATH, recordsJson)) {
                 return null;
             }
             return record;

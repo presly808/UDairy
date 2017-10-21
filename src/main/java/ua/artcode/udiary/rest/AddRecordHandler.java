@@ -25,7 +25,7 @@ public class AddRecordHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         // get input json from httpExchange
-//        String jsonBody = JsonUtils.jsonToString(httpExchange.getRequestBody());
+//        String jsonBody = JsonUtils.streamToStr(httpExchange.getRequestBody());
         // json -> object(model)
         Record record = JsonUtils.jsonStreamToObj(httpExchange.getRequestBody(), Record.class);
 

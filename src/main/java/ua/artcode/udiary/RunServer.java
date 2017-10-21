@@ -14,6 +14,7 @@ import java.net.InetSocketAddress;
 /**
  * Created by serhii on 07.10.17.
  */
+// todo replace
 public class RunServer {
 
     // todo use yaml config file
@@ -27,8 +28,13 @@ public class RunServer {
                 new UserDaoJsonImpl(file.getAbsolutePath()));
 
 
-        HttpServer server = HttpServer.create();
-        server.bind(new InetSocketAddress(Integer.parseInt(ch.getProperty("app.port"))), 0);
+        String host = ch.getProperty("app.host");
+        int port = Integer.parseInt(ch.getProperty("app.port"));
+
+        HttpServer server = HttpServer.create(
+                new InetSocketAddress(host, port),0);
+
+
 
 
         server.createContext("/", new HelloHandler());

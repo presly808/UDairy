@@ -14,7 +14,8 @@ public class JsonUtils {
 
     private static final Gson GSON = ObjectHolder.getObject("gson",Gson.class);;
 
-    public static String jsonToString(InputStream requestBody) {
+    // todo better to replace using some library(apache commons, guava)
+    public static String streamToStr(InputStream requestBody) {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(requestBody))) {
 
@@ -46,30 +47,20 @@ public class JsonUtils {
 
     public static String readJsonFromFile(String filePath) {
 
-        // todo find some library that has already implemented such logic
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(filePath)))) {
-
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-
-            return sb.toString();
-        } catch (IOException e) {
+        try {
+            return streamToStr(new FileInputStream(filePath));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
-    public static boolean writeJsonToFile(String path, String json) {
+    public static boolean writeContentToFile(String path, String content) {
 
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)))) {
 
-            writer.write(json);
+            writer.write(content);
 
         } catch (IOException e) {
             e.printStackTrace();

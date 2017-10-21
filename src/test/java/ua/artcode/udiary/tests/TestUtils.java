@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.TestCase.*;
@@ -24,7 +23,6 @@ import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.ClassPathUtils;
 import ua.artcode.udiary.utils.JsonUtils;
-import ua.artcode.udiary.utils.Validator;
 
 
 public class TestUtils {
@@ -69,7 +67,7 @@ public class TestUtils {
                 "}";
 
         InputStream requestBody = new ByteArrayInputStream(testStr.getBytes());
-        JSONAssert.assertEquals(JsonUtils.jsonToString(requestBody), testStr, false);
+        JSONAssert.assertEquals(JsonUtils.streamToStr(requestBody), testStr, false);
 
         log.info("Test passed.");
     }
@@ -152,7 +150,7 @@ public class TestUtils {
                 "\"title\":\"Title2\"," +
                 "\"body\":\"Body2\"}\n";
 
-        assertTrue(JsonUtils.writeJsonToFile("UDairy_json_out.txt", initJson));
+        assertTrue(JsonUtils.writeContentToFile("UDairy_json_out.txt", initJson));
         JSONAssert.assertEquals(readFromFile("UDairy_json_out.txt"),
                 "{\"id\":\"2\"," +
                         "\"user\":{\"id\":2,\"email\":\"mail2@mail.com\",\"pass\":\"pass2\"}," +

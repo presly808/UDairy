@@ -15,6 +15,7 @@ public class ObjectHolder {
 
     static  {
         staticObjects.put("gson", new GsonBuilder().setPrettyPrinting().create());
+        // todo remove user type, client should know about gsonType, we just keep Gson
         staticObjects.put("userListType",new TypeToken<List<User>>(){}.getType());
         try {
             staticObjects.put("ConfigHolder",new ConfigHolder());

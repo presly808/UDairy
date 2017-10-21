@@ -11,6 +11,7 @@ import ua.artcode.udiary.utils.JsonUtils;
 import java.io.IOException;
 import java.io.OutputStream;
 
+// todo finish logic
 public class LoginHandler implements HttpHandler {
 
     MainController mainController;

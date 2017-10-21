@@ -1,8 +1,6 @@
 package ua.artcode.udiary.tests;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,7 +66,7 @@ public class TestUserDaoJsonImpl {
         testUsers.add(user1);
 
         String usersJson = gson.toJson(testUsers, userListType);
-        JsonUtils.writeJsonToFile(PATH, usersJson);
+        JsonUtils.writeContentToFile(PATH, usersJson);
 
         userDaoJsonImpl = new UserDaoJsonImpl(PATH);
     }
