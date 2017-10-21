@@ -42,7 +42,7 @@ public class EmailNotificatorTest {
     @Before
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
         em = new EmailNotificator(ch);
-        em.useTransportSend = false;
+
     }
 
 
@@ -61,7 +61,7 @@ public class EmailNotificatorTest {
 
     @Test(expected = MessagingException.class)
     public void negativeSendMail() throws MessagingException {
-        em.useTransportSend = true;
+
         em.sendMail("testemailexample.com", "subject", "body");
 
     }
