@@ -1,9 +1,9 @@
 package ua.artcode.udiary.tests;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import ua.artcode.udiary.config.ConfigHolder;
+import ua.artcode.udiary.config.ObjectHolder;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,18 +13,14 @@ import static org.junit.Assert.*;
 /**
  * Created by serhii on 15.10.17.
  */
-public class ConfigHolderTest {
+public class TestConfigHolder {
 
-
-    private static final String CONFIG_FILE_PATH = "/app.properties";
     private ConfigHolder configHolder;
 
     @Before
     public void before() throws IOException {
 
-        String file = ConfigHolderTest.class.getResource(CONFIG_FILE_PATH).getFile();
-        configHolder = new ConfigHolder(
-                new File(file).getPath());
+        configHolder = ObjectHolder.getObject("ConfigHolder",ConfigHolder.class);
     }
 
     @Test

@@ -19,6 +19,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.*;
 
 import org.skyscreamer.jsonassert.JSONAssert;
+import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.Record;
 import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.ClassPathUtils;
@@ -27,7 +28,7 @@ import ua.artcode.udiary.utils.Validator;
 
 
 public class TestUtils {
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = ObjectHolder.getObject("gson",Gson.class);
     private static Logger log = Logger.getLogger("TestUtils");
 
     // todo extract to Utils

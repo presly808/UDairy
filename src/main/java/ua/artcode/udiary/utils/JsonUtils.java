@@ -2,6 +2,7 @@ package ua.artcode.udiary.utils;
 
 import com.google.gson.Gson;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.Record;
 
 import java.io.*;
@@ -11,7 +12,7 @@ import java.io.*;
  */
 public class JsonUtils {
 
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = ObjectHolder.getObject("gson",Gson.class);;
 
     public static String jsonToString(InputStream requestBody) {
         try (BufferedReader reader = new BufferedReader(

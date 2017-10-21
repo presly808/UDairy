@@ -1,8 +1,7 @@
 package ua.artcode.udiary.dao;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import ua.artcode.udiary.config.ObjectHolder;
 import ua.artcode.udiary.model.User;
 import ua.artcode.udiary.utils.JsonUtils;
 
@@ -18,16 +17,16 @@ public class UserDaoJsonImpl implements UserDao{
     // todo get path from config
     private final String DATA_PATH;
 
-    // todo GSON must be a singleton
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-    // todo init in constructor
-    private Type userListType = new TypeToken<List<User>>(){}.getType();
+    private Gson gson;
+    private Type userListType;
     private List<User> userList;
 
     public UserDaoJsonImpl(String path) {
         DATA_PATH = path;
         String userListJson = JsonUtils.readJsonFromFile(path);
+
+        gson = ObjectHolder.getObject("gson",Gson.class);
+        userListType =  ObjectHolder.getObject("userListType",Type.class);
         userList = gson.fromJson(userListJson, userListType);
     }
 
