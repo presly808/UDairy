@@ -7,6 +7,8 @@
 package ua.artcode.udiary.tests;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -150,14 +152,22 @@ public class TestUtils {
                 "\"title\":\"Title2\"," +
                 "\"body\":\"Body2\"}\n";
 
-        assertTrue(JsonUtils.writeContentToFile("UDairy_json_out.txt", initJson));
-        JSONAssert.assertEquals(readFromFile("UDairy_json_out.txt"),
+        String filePath = "UDairy_json_out.txt";
+        assertTrue(JsonUtils.writeContentToFile(filePath, initJson));
+
+        JSONAssert.assertEquals(readFromFile(filePath),
                 "{\"id\":\"2\"," +
                         "\"user\":{\"id\":2,\"email\":\"mail2@mail.com\",\"pass\":\"pass2\"}," +
                         "\"title\":\"Title2\"," +
                         "\"body\":\"Body2\"}",false);
 
         log.info("Test passed.");
+
+        try {
+            Files.delete(Paths.get(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
