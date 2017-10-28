@@ -1,10 +1,5 @@
 {
-  "environments": {
-    "test": {
-      "scripts": {
-        "test-setup": "gradlew build",
-        "test": "gradlew test"
-      }
-    }
-  }
+  "name": "Getting Started with Gradle on Heroku",
+  "description": "A bare-bones Gradle app, which can easily be deployed to Heroku.",
+  "image": "heroku/gradle"
 }
