@@ -1,0 +1,10 @@
+{
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "gradlew build",
+        "test": "gradlew test"
+      }
+    }
+  }
+}

@@ -45,3 +45,7 @@ sourceSets {
         output.resourcesDir = "build/classes/main"
     }
 }
+
+task stage {
+  dependsOn installDist
+}
